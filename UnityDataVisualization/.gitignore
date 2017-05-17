@@ -69,4 +69,5 @@ sysinfo.txt
 # Leap Motion
 Assets/LeapMotion*
 Assets/Plugins*
-Assets/*.obj
+Assets/KineticMonteCarlo/Prefabs/proteinonly*
+Assets/DataViewer/Objects/*
