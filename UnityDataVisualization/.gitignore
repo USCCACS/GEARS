@@ -65,3 +65,8 @@ sysinfo.txt
 *.apk
 
 *.unitypackage
+
+# Leap Motion
+Assets/LeapMotion*
+Assets/Plugins*
+Assets/*.obj
