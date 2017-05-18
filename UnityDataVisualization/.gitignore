@@ -70,4 +70,5 @@ sysinfo.txt
 Assets/LeapMotion*
 Assets/Plugins*
 Assets/KineticMonteCarlo/Prefabs/proteinonly*
-Assets/DataViewer/Objects/*
+Assets/DataViewer/Objects/Membrane*
+Assets/DataViewer/Objects*
