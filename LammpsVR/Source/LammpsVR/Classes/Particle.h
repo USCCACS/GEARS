@@ -18,10 +18,45 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+/****************************************************************
+* MAGICS Written Member Functions
+****************************************************************/
+public:
+	virtual bool SetPosition(int32 index, FVector newPosition, bool dirty);
+	virtual void AddInstance(FVector position);
+	virtual void ClearInstances();
 
-	
-	
+	virtual void SetMeshScale(float scale_);
+	virtual void SetSystemScale(float scale_);
+	virtual void SetTotalScale(float scale_);
+
+	void SetRadius(float newRadius_);
+	void SetColor(FColor newColor_);
+	void SetColorAndRadius(FColor color_, float radius_);
+	float GetRadius() { return m_radius; }
+	FColor GetColor() { return m_color; }
+
+protected:
+	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		class UHierarchicalInstancedStaticMeshComponent* m_Mesh;
+	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		float m_radius = 25.0f;
+	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		float m_scale = 1.0f;
+	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		FColor m_color = FColor::Magenta;
+
+	virtual UMaterialInstanceDynamic* GetMaterial();
+	virtual void SetMaterial(UMaterialInterface* material_);
+	virtual void SetMeshDimensions(float width_, float height_);
+
+	float RadiusToWidth(float radius_);
+	float RadiusToHeight(float radius_);
+
+public:
+	/* Default/Standardized Sizes and Colors */
+	const static FColor m_defaultColor;
+	const static float m_defaultRadius;	
+	const static float m_defaultWidth;
+	const static float m_defaultHeight;
 };
