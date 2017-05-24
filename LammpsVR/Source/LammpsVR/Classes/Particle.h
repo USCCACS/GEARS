@@ -22,11 +22,14 @@ protected:
 * MAGICS Written Member Functions
 ****************************************************************/
 public:
+	AParticle(FColor color_, float radius);
+	AParticle(FColor color_);
+	AParticle(float radius_);
+
 	virtual bool SetPosition(int32 index, FVector newPosition, bool dirty);
 	virtual void AddInstance(FVector position);
 	virtual void ClearInstances();
 
-	virtual void SetMeshScale(float scale_);
 	virtual void SetSystemScale(float scale_);
 	virtual void SetTotalScale(float scale_);
 
@@ -46,9 +49,12 @@ protected:
 	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		FColor m_color = FColor::Magenta;
 
+	virtual void ConstructorHelper();
+
 	virtual UMaterialInstanceDynamic* GetMaterial();
 	virtual void SetMaterial(UMaterialInterface* material_);
 	virtual void SetMeshDimensions(float width_, float height_);
+	virtual void SetMeshScale(float scale_);
 
 	float RadiusToWidth(float radius_);
 	float RadiusToHeight(float radius_);

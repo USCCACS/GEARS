@@ -66,10 +66,9 @@ protected:
 	_LammpsClose m_lammpsClose;
 
 	/* Spawning/Rendering Variables */
-	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
-		TSubclassOf<AParticle> m_spawningReference;
-	UPROPERTY(EditAnywhere, Category = "System")
-		float m_scale = 1.0;
+	FActorSpawnParameters m_spawnParams;
+	UPROPERTY(EditDefaultsOnly, Category = "Particle Management")
+		TSubclassOf<AParticleVisualizationManager> m_managerReference;
 
 	/* Simulation Control Variables */
 	UPROPERTY(BlueprintReadWrite)

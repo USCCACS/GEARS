@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,6 +39,11 @@ namespace CACS
             {
                 slider.value = slider.value - 0.01f;
                 Debug.Log("You pressed the left bumper");
+            }
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Application.LoadLevel(Application.loadedLevel);
             }
     }
 
@@ -80,9 +86,14 @@ namespace CACS
 
         protected void processInput()
         {
-            if (Math.Abs(left_horiz) > looseJoystickParam)
+            if (Math.Abs(Input.GetAxis("LeftJoyHoriz")) > looseJoystickParam)
             {
-                transform.RotateAround(transform.position, Vector3.up, left_horiz);
+                transform.RotateAround(this.transform.position, transform.up, Input.GetAxis("LeftJoyHoriz") * rotationSensitivity * 0.5f);
+            }
+            if (Math.Abs(Input.GetAxis("LeftJoyVert")) > looseJoystickParam)
+            {
+                Vector3 dir = mainCamera.transform.forward - new Vector3(0, mainCamera.transform.forward.y, 0);
+                transform.Translate(this.transform.forward * Input.GetAxis("LeftJoyVert") * panSensitivity);
             }
         }
 

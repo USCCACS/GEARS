@@ -30,37 +30,46 @@ public:
  ******** MAGICS Written Member Functions *********************************************************
  **************************************************************************************************/
 public:
-	AParticleVisualizationManager(TSubclassOf<AParticle> spawnReference_);
-	AParticleVisualizationManager(TSubclassOf<AParticle> spawnReference_, float systemScale_);
-
-	// Lammps Communication/Synchronization
+	/* Lammps Communication/Synchronization */
 	void InitWithLammps(void* lammps_,
 		_LammpsExtract lammpsExtractGlobal_,
 		_LammpsExtract lammpsExtractAtom_);
 	void GetCurrentLammpsPositions(TMap<int32, TArray<FVector> > &positions_);
 	void UpdateWithLammps();
 
-	// Particle Creation and Manipulation 
-	bool AddNewParticleType(int32 typeNum_, FString typeName_, FColor color_, float radius_);
-	AParticle* SpawnNewParticle(FVector position_);
+	/* Particle Creation */
+	void SetSpawnReference(TSubclassOf<AParticle> spawnReference_);
 
+	void ManageNewParticleType(int32 type_, FString typeName_);
+	void ManageNewParticleType(int32 type_, FColor color_, float radius_);
+	void ManageNewParticleType(int32 type_, AParticle* particle_);
+
+	AParticle* SpawnNewParticleType(FName typeName_);
+	AParticle* SpawnNewParticleType(FColor color_, float radius_);
+	AParticle* SpawnNewParticleType(FColor color_, float radius_, FVector position_);
+	AParticle* SpawnNewParticleType(FName typeName_, FVector position_);
+
+	void SetTypeColor(int32 type_, FColor color_);
+	void SetTypeRadius(int32 type_, float radius_);
+
+	/* Particle Position Manipulation */
 	void SetParticleInstancePosition(int32 type_, int32 index_, FVector newPosition_);
-	void SetParticlePositions(int32 type_, TArray<Fvector> positions_);
-
-	void SetTypeColor(int32 type_);
-	void SetTypeRadius(int32 type_);
+	void SetParticleInstancePositions(int32 type_, TArray<FVector> positions_);
 
 protected:
-	TSubclassOf<AParticle> m_spawnReference;
+	UPROPERTY(EditDefaultsOnly, Category = "Particle Management")
+		TSubclassOf<AParticle> m_spawnReference;
 
-	/* Functions */
-	void AddNewParticle(int32 type_, FVector position_);
+	/* Helper functions for updating particle instance positions */
+	void SetupParticleTypesFromLammps();
+	void SpawnNewParticle(int32 type_, FVector position_);
 
 private:
 	/* Particle Tracking/Management */
 	TMap<int32, AParticle*> m_particles;		// Key = type, Value = instantiated particle
+	TMap<int32, TArray<FVector> > m_positions;
 
-	/* Lammps Related */
+	/* Lammps Dll Related */
 	void* m_lammps;
 	_LammpsExtract m_lammpsExtractGlobal;
 	_LammpsExtract m_lammpsExtractAtom;

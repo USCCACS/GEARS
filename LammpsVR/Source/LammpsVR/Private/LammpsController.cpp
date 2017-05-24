@@ -22,6 +22,9 @@ ALammpsController::ALammpsController()
 	m_lammpsWorker = nullptr;
 	m_pvm = nullptr;
 
+	m_spawnParams.Owner = this;
+	m_spawnParams.Instigator = Instigator;
+
 	m_paused = false;
 }
 
@@ -29,11 +32,12 @@ ALammpsController::ALammpsController()
 void ALammpsController::BeginPlay()
 {
 	Super::BeginPlay();
-	bool success = ImportLammps(FString("LammpsDll"), FString("lammpslib.dll"));
+	bool success = ImportLammps(FString("LammpsDll"), FString("lammps.dll"));
 
 	if (success) {
 		m_lammpsWorker = new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
-		m_pvm = new AParticleVisualizationManager();
+		m_pvm = GetWorld()->SpawnActor<AParticleVisualizationManager>(m_managerReference, GetTransform(), m_spawnParams);
+		m_pvm->SpawnNewParticleType(FColor::MakeRandomColor(), 25.0f,  FVector::ZeroVector)->AddInstance(FVector(2.0f));
 	}
 
 	// This is temporary. Remove once we let LammpsRunner handle generation of new atoms 
@@ -55,7 +59,8 @@ void ALammpsController::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	Super::EndPlay(EndPlayReason);
 
 	delete m_lammpsWorker;
-	delete m_pvm;
+	m_lammpsWorker = nullptr;
+	m_pvm->Destroy();
 }
 
 // Called every frame

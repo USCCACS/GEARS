@@ -10,6 +10,7 @@ LammpsWorker::LammpsWorker(void* lammps_, _LammpsCommand commandFunction_, std::
 {
 	SetLammpsInstance(lammps_, commandFunction_);
 	SetSignalLock(lock_);
+	m_thread = nullptr;
 }
 
 LammpsWorker::~LammpsWorker()
@@ -34,10 +35,12 @@ LammpsWorker::SetSignalLock(std::mutex* lock_) {
 #pragma region deployment
 void
 LammpsWorker::DeployWorker() {
+	delete m_thread;
 	if (m_lammps) {
 		m_thread = FRunnableThread::Create(this, TEXT("LammpsWorker"), 0, TPri_Highest);
 	}
 	else {
+		m_thread = nullptr;
 		SignalCompletion();
 	}
 }
