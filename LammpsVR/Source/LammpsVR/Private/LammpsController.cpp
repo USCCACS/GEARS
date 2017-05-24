@@ -37,7 +37,7 @@ void ALammpsController::BeginPlay()
 	if (success) {
 		m_lammpsWorker = new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
 		m_pvm = GetWorld()->SpawnActor<AParticleVisualizationManager>(m_managerReference, GetTransform(), m_spawnParams);
-		m_pvm->SpawnNewParticleType(FColor::MakeRandomColor(), 25.0f,  FVector::ZeroVector)->AddInstance(FVector(2.0f));
+		m_pvm->ManageNewParticleType(1, FColor::Red, 0.50f);
 	}
 
 	// This is temporary. Remove once we let LammpsRunner handle generation of new atoms 

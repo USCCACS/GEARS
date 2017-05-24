@@ -53,11 +53,11 @@ protected:
 
 	virtual UMaterialInstanceDynamic* GetMaterial();
 	virtual void SetMaterial(UMaterialInterface* material_);
-	virtual void SetMeshDimensions(float width_, float height_);
 	virtual void SetMeshScale(float scale_);
+	virtual void UpdateMeshMaterial();
 
-	float RadiusToWidth(float radius_);
-	float RadiusToHeight(float radius_);
+	float WidthFromRadius(float radius_);
+	float HeightFromRadius(float radius_);
 
 public:
 	/* Default/Standardized Sizes and Colors */

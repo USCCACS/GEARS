@@ -4,6 +4,10 @@
 #include "Particle.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
 
+#define WIDTH "Width"
+#define HEIGHT "Height"
+#define COLOR "Color"
+
 const FColor AParticle::m_defaultColor = FColor::Magenta;
 const float AParticle::m_defaultRadius = 0.25f;				// Radius of Hydrogen in Angstroms
 const float AParticle::m_defaultWidth = 50.0f;
@@ -131,22 +135,19 @@ AParticle::SetMaterial(UMaterialInterface* material_) {
 /* Available to Users */
 void
 AParticle::SetColorAndRadius(FColor color_, float radius_) {
-	SetColor(color_);
-	SetRadius(radius_);
+	m_radius = radius_;
+	m_color = color_;
+	UpdateMeshMaterial();
 }
 
 void 
 AParticle::SetRadius(float newRadius_) {
-	m_radius = newRadius_;
-	SetMeshScale(m_scale);
+	SetColorAndRadius(m_color, newRadius_);
 }
 
 void 
 AParticle::SetColor(FColor newColor_) {
-	m_color = newColor_;
-	UMaterialInstanceDynamic* dynamicMat = GetMaterial();
-	dynamicMat->SetVectorParameterValue(FName("Color"), newColor_);
-	SetMaterial(dynamicMat);
+	SetColorAndRadius(newColor_, m_radius);
 }
 
 void
@@ -160,30 +161,41 @@ AParticle::SetTotalScale(float scale_) {
 	SetSystemScale(scale_);
 }
 
-/* Only Available to Manager */
+/* Sets the scale of the billboard representing this atom. Scaling is standardized such that at
+ *	Scale = 1.0f
+ *	Radius = 0.25f
+ *	Width = 20.0f
+ *	Height = 40.0f
+ * where 0.25 A is the empirical radius of hydrogen
+ */
 void
 AParticle::SetMeshScale(float scale_) {
 	m_scale = scale_;
-	SetMeshDimensions(RadiusToWidth(m_radius), RadiusToHeight(m_radius));
+	UpdateMeshMaterial();
 }
 
-void 
-AParticle::SetMeshDimensions(float width_, float height_) {
+/* For some reason, I got errors when trying to update the color, width, and height separately. 
+ * So to fix it, I put any material change in this one function. Any time a user wants to change
+ * the size or color of the atom, whether one or both, this function will get called.
+ */
+void
+AParticle::UpdateMeshMaterial() {
 	UMaterialInstanceDynamic* dynamicMat = GetMaterial();
-	dynamicMat->SetScalarParameterValue(FName("Width"), width_);
-	dynamicMat->SetScalarParameterValue(FName("Heigth"), height_);
+	dynamicMat->SetVectorParameterValue(FName(COLOR), m_color);
+	dynamicMat->SetScalarParameterValue(FName(WIDTH), WidthFromRadius(m_radius));
+	dynamicMat->SetScalarParameterValue(FName(HEIGHT), HeightFromRadius(m_radius));
 	SetMaterial(dynamicMat);
 }
 
 /* Helper Functions for radius scaling */
 float
-AParticle::RadiusToWidth(float radius_) {
+AParticle::WidthFromRadius(float radius_) {
 	return radius_ * (m_defaultWidth / m_defaultRadius) * m_scale;
 }
 
 float
-AParticle::RadiusToHeight(float radius_) {
-	return RadiusToWidth(radius_) * 2;
+AParticle::HeightFromRadius(float radius_) {
+	return (2 * WidthFromRadius(radius_));
 }
 #pragma endregion SCALE_COLOR
 
