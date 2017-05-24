@@ -2,6 +2,7 @@
 
 #include "LammpsVR.h"
 #include "Particle.h"
+#include "LammpsTypes.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
 
 #define WIDTH "Width"
@@ -9,7 +10,7 @@
 #define COLOR "Color"
 
 const FColor AParticle::m_defaultColor = FColor::Magenta;
-const float AParticle::m_defaultRadius = 0.25f;				// Radius of Hydrogen in Angstroms
+const float AParticle::m_defaultRadius = ParticleConst::HydrogenRadius;	// from LammpsTypes.h
 const float AParticle::m_defaultWidth = 50.0f;
 const float AParticle::m_defaultHeight = 100.0f;
 
@@ -17,14 +18,6 @@ const float AParticle::m_defaultHeight = 100.0f;
 AParticle::AParticle()
 {
 	ConstructorHelper();
-
-	/*if (m_Mesh->GetMaterial(0)) {
-		UMaterialInstanceDynamic* dynamicMat = UMaterialInstanceDynamic::Create(m_Mesh->GetMaterial(0), this);
-		dynamicMat->SetVectorParameterValue(FName("Color"), m_defaultColor);
-		dynamicMat->SetScalarParameterValue(FName("Width"), m_defaultWidth);
-		dynamicMat->SetScalarParameterValue(FName("Height"), m_defaultHeight);
-		m_Mesh->SetMaterial(0, dynamicMat);
-	}*/
 }
 
 // Called when the game starts or when spawned
@@ -37,41 +30,6 @@ void AParticle::BeginPlay()
 ******** MAGICS Written Member Functions *********************************************************
 **************************************************************************************************/
 #pragma region CONSTRUCTOR
-AParticle::AParticle(FColor color_, float radius_) {
-	ConstructorHelper();
-	m_color = color_;
-	m_radius = radius_;
-
-	//TODO: Modularize thi section 
-	/*UMaterialInstanceDynamic* dynamicMat = UMaterialInstanceDynamic::Create(m_Mesh->GetMaterial(0), this);
-	dynamicMat->SetVectorParameterValue(FName("Color"), m_color);
-	dynamicMat->SetScalarParameterValue(FName("Width"), RadiusToWidth(m_radius));
-	dynamicMat->SetScalarParameterValue(FName("Height"), RadiusToHeight(m_radius));
-	m_Mesh->SetMaterial(0, dynamicMat);*/
-}
-
-AParticle::AParticle(FColor color_) {
-	ConstructorHelper();
-	m_color = color_;
-
-	/*UMaterialInstanceDynamic* dynamicMat = UMaterialInstanceDynamic::Create(m_Mesh->GetMaterial(0), this);
-	dynamicMat->SetVectorParameterValue(FName("Color"), m_color);
-	dynamicMat->SetScalarParameterValue(FName("Width"), m_defaultWidth);
-	dynamicMat->SetScalarParameterValue(FName("Height"), m_defaultHeight);
-	m_Mesh->SetMaterial(0, dynamicMat);*/
-}
-
-AParticle::AParticle(float radius_) {
-	ConstructorHelper();
-	m_radius = radius_;
-
-	/*UMaterialInstanceDynamic* dynamicMat = UMaterialInstanceDynamic::Create(m_Mesh->GetMaterial(0), this);
-	dynamicMat->SetVectorParameterValue(FName("Color"), m_defaultColor);
-	dynamicMat->SetScalarParameterValue(FName("Width"), RadiusToWidth(m_radius));
-	dynamicMat->SetScalarParameterValue(FName("Height"), RadiusToHeight(m_radius));
-	m_Mesh->SetMaterial(0, dynamicMat);*/
-}
-
 void
 AParticle::ConstructorHelper() {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -112,6 +70,11 @@ AParticle::AddInstance(FVector position_) {
 	*transform_.SetScale3D(FVector(1.0f));
 	*/
 	m_Mesh->AddInstance(FTransform(position_));
+}
+
+int32
+AParticle::GetInstanceCount() {
+	return m_Mesh->GetNumRenderInstances();		// This may yield unreliable values if called in the middle of draw calls or instance adding/setting
 }
 
 void 

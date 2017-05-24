@@ -51,7 +51,7 @@ public:
 protected:
 	/* My homeboys */
 	LammpsWorker* m_lammpsWorker;
-	AParticleVisualizationManager* m_pvm;
+	AParticleVisualizationManager* m_ParticleVisualizationManager;
 	std::mutex m_lammpsLock;
 
 	/* Dll Variables */
@@ -65,6 +65,12 @@ protected:
 	_LammpsExtract m_lammpsExtractAtom;
 	_LammpsClose m_lammpsClose;
 
+	/* Files/Input Scripts */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Lammps")
+		FString m_dllName;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Lammps")
+		FString m_scriptName;
+
 	/* Spawning/Rendering Variables */
 	FActorSpawnParameters m_spawnParams;
 	UPROPERTY(EditDefaultsOnly, Category = "Particle Management")
@@ -73,6 +79,10 @@ protected:
 	/* Simulation Control Variables */
 	UPROPERTY(BlueprintReadWrite)
 		bool m_paused = false;
+
+	/* For error checking before you do something really bad */
+	UFUNCTION(BlueprintCallable, Category = "Lammps")
+		bool LammpsIsActive();
 };
 
 template<typename T>

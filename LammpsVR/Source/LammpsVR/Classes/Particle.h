@@ -28,6 +28,7 @@ public:
 
 	virtual bool SetPosition(int32 index, FVector newPosition, bool dirty);
 	virtual void AddInstance(FVector position);
+	virtual int32 GetInstanceCount();
 	virtual void ClearInstances();
 
 	virtual void SetSystemScale(float scale_);

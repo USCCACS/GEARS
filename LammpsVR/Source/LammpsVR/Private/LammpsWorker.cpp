@@ -24,12 +24,6 @@ LammpsWorker::SetLammpsInstance(void* lammps_, _LammpsCommand commandFunction_) 
 	m_lammps = lammps_;
 	m_lammpsCommand = commandFunction_;
 }
-
-void
-LammpsWorker::SetSignalLock(std::mutex* lock_) {
-	m_signalLock = lock_;
-
-}
 #pragma endregion init
 
 #pragma region deployment
@@ -61,13 +55,19 @@ LammpsWorker::Run() {
 }
 #pragma endregion deployment
 
+void
+LammpsWorker::SetSignalLock(std::mutex* lock_) {
+	m_signalLock = lock_;
+
+}
+
 #pragma region synch
-void 
+void
 LammpsWorker::LockThread() {
 	m_internalLock.lock();
 }
 
-void 
+void
 LammpsWorker::UnlockThread() {
 	m_internalLock.unlock();
 }
@@ -83,6 +83,7 @@ LammpsWorker::SignalCompletion() {
 }
 #pragma endregion synch
 
+
 #pragma region unused
 
 bool
@@ -96,3 +97,4 @@ LammpsWorker::Stop() {
 }
 
 #pragma endregion unused
+

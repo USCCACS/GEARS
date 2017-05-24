@@ -20,7 +20,7 @@ ALammpsController::ALammpsController()
 	m_lammpsClose = nullptr;
 
 	m_lammpsWorker = nullptr;
-	m_pvm = nullptr;
+	m_ParticleVisualizationManager = nullptr;
 
 	m_spawnParams.Owner = this;
 	m_spawnParams.Instigator = Instigator;
@@ -32,35 +32,86 @@ ALammpsController::ALammpsController()
 void ALammpsController::BeginPlay()
 {
 	Super::BeginPlay();
-	bool success = ImportLammps(FString("LammpsDll"), FString("lammps.dll"));
+	bool success = ImportLammps(FString("LammpsDll"), m_dllName);
 
 	if (success) {
+		RunLammpsScript(m_scriptName);
+
 		m_lammpsWorker = new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
-		m_pvm = GetWorld()->SpawnActor<AParticleVisualizationManager>(m_managerReference, GetTransform(), m_spawnParams);
-		m_pvm->ManageNewParticleType(1, FColor::Red, 0.50f);
+		m_ParticleVisualizationManager = GetWorld()->SpawnActor<AParticleVisualizationManager>(m_managerReference, GetTransform(), m_spawnParams);
+
+/************************** FOR THE CACS CREW ***************************************************************/
+#pragma region ADJUST_PARTICLES_HERE
+		{	
+			/* Add New Particle Types ************************************************************************************/
+			/* 
+			 * To add a new type of particle to the system with a specific lammps type number, do it here. If you do not
+			 * add a new particle type yourself, my system will create one for you when it reads lammps, but it will assign
+			 * it a random color and a radius of 0.25f (Hydrogen).
+			 * To add a new type of particle, simply call the ManageNewParticleType() member function of the 
+			 * ParticleVisualizationManager. Right now, the only input paramters that will work are a color and radius of
+			 * variable type FColor and float (respectively). Here is an example:
+				* m_ParticleVisualizationManager->ManageNewParticleType(1, FColor::Yellow, 1.11f);
+				* m_ParticleVisualizationManager->ManageNewParticleType(2, FColor::Red, 0.6f);
+			 */
+
+			// Insert Code Here
+			m_ParticleVisualizationManager->ManageNewParticleType(1, FColor::Yellow, 1.11f);
+			m_ParticleVisualizationManager->ManageNewParticleType(2, FColor::Red, 0.6f);
+
+			/************************************************************************************************************/
+		}
+		{
+			/* Adjust System Scale* ************************************************************************************/
+			/*
+			* You can also adjust the scale of the spacing between atoms (or rather, the factor by which the position
+			* coordinates get scaled by when reading from lammps. You can adjust this value in the blueprint editor for 
+			* BP_Particle (i.e. the blueprint version of the AParticle class. However, doing it via code works just as well.
+			* Having too small a system scale may cause billboards to weirdly overlap with each other.
+			* Here is an example:
+			* m_ParticleVisualizationManager->SetSystemScale(100.0f);
+			*/
+
+			// Insert Code Here
+			m_ParticleVisualizationManager->SetSystemScale(200.0f);		// I found that 200.0f is a good scale for the porous
+																		// Vashishta potential. But change it if you feel it's
+																		// for the given lammps script
+
+			/************************************************************************************************************/
+		}
+			/*
+			 * REMEMBER to compile once you've made changes to the system. To do that, click the "Compile" button at the top
+			 * of the Unreal Editor window. You can also right-click "LammpsVR" in the SolutionExplorer (the right panel in 
+			 * visual studio) and select "Build" or "Rebuild". However, you may need to restart the Unreal Editor for these
+			 * changes to take effect.
+			 *
+			 * ALSO here's a neat debugging tool to check the frame rate of the game:
+			 * In the editor, type the '`' key (tick), then type "stat unit" then press ENTER. Do the same, but type in 
+			 * "stat FPS" instead. Those numbers will help lots. :)
+			 */
+#pragma endregion ADJUST_PARTICLES_HERE
+/************************** FOR THE CACS CREW ***************************************************************/
+
+		m_ParticleVisualizationManager->InitWithLammps(m_lammps, m_lammpsExtractGlobal, m_lammpsExtractAtom);
 	}
-
-	// This is temporary. Remove once we let LammpsRunner handle generation of new atoms 
-	//this->SpawnNewAtom(FVector::ZeroVector, FColor::Yellow, -150.0f, 300.0f);
-	//this->SpawnNewAtom(FVector::ZeroVector, FColor::Red, -100.0f, 200.0f);
-	//m_atoms[0]->SetRadius(10.0f);
-
-	// Initialize the number of atoms by type 
-	// Note that lammps types start from 1, but my types are indexed from 0
-	//int atomCount = *((int*)(*m_lammpsExtractGlobal)(m_lammps, "natoms"));
-	//int* types = (int*)(*m_lammpsExtractAtom)(m_lammps, "type");
-	//for (int i = 0; i < atomCount; ++i) {
-		//m_atoms[types[i] - 1]->AddInstance(FVector::ZeroVector);
-	//}
 }
 
 // Called when the game endss or when destroyed
 void ALammpsController::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	Super::EndPlay(EndPlayReason);
 
+	//(*m_lammpsClose)(m_lammps);
+	m_lammps = nullptr;
+	m_lammpsOpenNoMPI = nullptr;
+	m_lammpsCommand = nullptr;
+	m_lammpsExtractGlobal = nullptr;
+	m_lammpsExtractAtom = nullptr;
+	m_lammpsClose = nullptr;
+
 	delete m_lammpsWorker;
 	m_lammpsWorker = nullptr;
-	m_pvm->Destroy();
+
+	m_ParticleVisualizationManager->Destroy();
 }
 
 // Called every frame
@@ -68,6 +119,13 @@ void ALammpsController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (LammpsIsActive()) {
+		if (m_lammpsLock.try_lock()) {
+			m_ParticleVisualizationManager->UpdateWithLammps();
+			GEngine->AddOnScreenDebugMessage(12, 2.0f, FColor::MakeRandomColor(), "About to deploy worker");
+			m_lammpsWorker->DeployWorker();
+		}
+	}
 }
 
 
@@ -125,13 +183,23 @@ ALammpsController::ReadLammpsScript(FString scriptName_) {
 	FString gameDir = FPaths::GameDir();
 	_wchdir(*gameDir);
 
-	FString scriptPath = FPaths::GameDir() + "/" + scriptName_;
+	FString scriptPath = FPaths::GameDir() + "/Scripts/" + scriptName_;
 	FString script = "";
 
 	FFileHelper::LoadFileToString(script, *scriptPath);
 	GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::White, *script);
 
 	return script;
+}
+
+bool
+ALammpsController::LammpsIsActive() {
+	return m_lammps &&
+		m_lammpsOpenNoMPI &&
+		m_lammpsCommand &&
+		m_lammpsExtractGlobal &&
+		m_lammpsExtractAtom &&
+		m_lammpsClose;
 }
 #pragma endregion LAMMPS_IMPORT
 

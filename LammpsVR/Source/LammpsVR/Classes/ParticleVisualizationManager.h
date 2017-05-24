@@ -34,8 +34,8 @@ public:
 	void InitWithLammps(void* lammps_,
 		_LammpsExtract lammpsExtractGlobal_,
 		_LammpsExtract lammpsExtractAtom_);
-	void GetCurrentLammpsPositions(TMap<int32, TArray<FVector> > &positions_);
 	void UpdateWithLammps();
+	void GetCurrentLammpsPositions(TMap<int32, TArray<FVector> > &positions_);
 
 	/* Particle Creation */
 	void SetSpawnReference(TSubclassOf<AParticle> spawnReference_);
@@ -55,14 +55,18 @@ public:
 	/* Particle Position Manipulation */
 	void SetParticleInstancePosition(int32 type_, int32 index_, FVector newPosition_);
 	void SetParticleInstancePositions(int32 type_, TArray<FVector> positions_);
+	void SetSystemScale(float scale_);
+
+	/* Data Access */
+	AParticle* GetParticle(int32 type_) { return *(m_particles.Find(type_));  }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Particle Management")
 		TSubclassOf<AParticle> m_spawnReference;
 
 	/* Helper functions for updating particle instance positions */
-	void SetupParticleTypesFromLammps();
 	void SpawnNewParticle(int32 type_, FVector position_);
+	bool RequestLammpsPositionData(int& natom_, double** &pos_, int* &type_);
 
 private:
 	/* Particle Tracking/Management */

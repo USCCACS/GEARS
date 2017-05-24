@@ -3,6 +3,11 @@
 #include "LammpsVR.h"
 #include "ParticleVisualizationManager.h"
 
+#include <unordered_map>
+
+#define POS_REQUEST "x"
+#define TYPE_REQUEST "type"
+#define NATOM_REQUEST "natoms"
 
 // Sets default values
 AParticleVisualizationManager::AParticleVisualizationManager()
@@ -46,7 +51,19 @@ AParticleVisualizationManager::InitWithLammps(void* lammps_,
 	m_lammpsExtractGlobal = lammpsExtractGlobal_;
 	m_lammpsExtractAtom = lammpsExtractAtom_;
 
-	//std::unordered_map<int, int> 
+	double** pos = nullptr;
+	int* type = nullptr;
+	int natoms = -1;
+	if (RequestLammpsPositionData(natoms, pos, type)) {
+		// Go through each atom and add instances to our map M_PARTICLES for the corresponding type. 
+		// Note that this does not support systems with variable number of atoms (e.g. Grand Canonical).
+		for (int i = 0; i < natoms; ++i) {
+			int32 utype = static_cast<int32>(type[i]);	// this may not be necessary, but just in case I'll keep it
+			ManageNewParticleType(utype, FColor::MakeRandomColor(), ParticleConst::HydrogenRadius);		// This won't add the new type if it already exists
+			m_particles[utype]->AddInstance(FVector::ZeroVector);
+		}
+	}
+
 }
 
 void 
@@ -57,12 +74,55 @@ AParticleVisualizationManager::GetCurrentLammpsPositions(TMap<int32,
 
 void 
 AParticleVisualizationManager::UpdateWithLammps() {
+	double** pos = nullptr; int* type = nullptr; int natoms = -1;
+	TMap<int32, TArray<FVector> > positionsByType;
 
+	if (RequestLammpsPositionData(natoms, pos, type)) {
+		// Preprocessing: Initialize the TArrays of position vectors
+		for (auto& particleType : m_particles) {
+			int32 type = particleType.Key;
+			positionsByType.Add(type);
+			positionsByType[type].Reserve(particleType.Value->GetInstanceCount());		// AParticle::GetInstanceCount() may not be totally reliable/thread safe.
+		}
+
+		// Fill in the array. Anders recommended the Reserve() step earlier to speed this part up. 
+		// No proper benchmarking/measurements have been made to confirm though
+		for (int i = 0; i < natoms; ++i) {
+			int32 unrealType = static_cast<int32>(type[i]);	// this may not be necessary, but just in case I'll keep it
+			FVector unrealPosition(static_cast<float>(pos[i][0]),
+				static_cast<float>(pos[i][1]),
+				static_cast<float>(pos[i][2]));
+			positionsByType[unrealType].Add(unrealPosition);
+		}
+
+		// Update positions of the mesh instances based on the map POSITIONSBYTYPE
+		for (auto& positionData : positionsByType) {
+			int32 type = positionData.Key;
+			TArray<FVector> positions = positionData.Value;
+			bool dirty = false;
+
+			for (int i = 0; i < positions.Num(); ++i) {
+				dirty = (i + 1 == positions.Num()) ? true : false;			// on the last instance, mark the render state as dirty
+				m_particles[type]->SetPosition(i, positions[i], dirty);
+			}
+		}
+	}
 }
 
-void 
-AParticleVisualizationManager::SetupParticleTypesFromLammps() {
+/* HELPER FUNCTIONS */
+bool 
+AParticleVisualizationManager::RequestLammpsPositionData(int& natoms_, double** &pos_, int* &type_) {
+	if (m_lammps && m_lammpsExtractGlobal && m_lammpsExtractAtom) {
+		pos_ = (double**)(*m_lammpsExtractAtom)(m_lammps, POS_REQUEST);
+		type_ = (int*)(*m_lammpsExtractAtom)(m_lammps, TYPE_REQUEST);
+		natoms_ = *(int*)(*m_lammpsExtractGlobal)(m_lammps, NATOM_REQUEST);
 
+		if (pos_ && type_)
+			return true;
+	}
+
+	return false;
+	
 }
 #pragma endregion LAMMPS
 
@@ -144,16 +204,24 @@ AParticleVisualizationManager::SpawnNewParticleType(FColor color_, float radius_
 #pragma region PARTICLE_POSITION_UPDATING
 void 
 AParticleVisualizationManager::SetParticleInstancePosition(int32 type_, int32 index_, FVector newPosition_) {
-
+	// TODO Call SetPosition() on mesh
 }
 
 void 
 AParticleVisualizationManager::SetParticleInstancePositions(int32 type_, TArray<FVector> positions_) {
-
+	// TODO Call SetPosition() on mesh
 }
 
 void 
 AParticleVisualizationManager::SpawnNewParticle(int32 type_, FVector position_) {
-
+	// TODO Call AddInstance() on mesh
 }
+
+void
+AParticleVisualizationManager::SetSystemScale(float scale_) {
+	for (auto& particle : m_particles) {
+		particle.Value->SetSystemScale(scale_);
+	}
+}
+
 #pragma endregion PARTICLE_POSITION_UPDATING
