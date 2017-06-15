@@ -43,7 +43,7 @@ uint32
 LammpsWorker::Run() {
 	if (m_lammps && m_lammpsCommand) {
 		LockThread();
-		(*m_lammpsCommand)(m_lammps, "run 1 pre no post no");
+		(*m_lammpsCommand)(m_lammps, "run 5 pre no post no");
 		UnlockThread();
 
 		SignalCompletion();

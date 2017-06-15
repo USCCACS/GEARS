@@ -44,6 +44,15 @@ public:
 		void RunLammpsScript(FString scriptName_);
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
 		FString ReadLammpsScript(FString scriptName_);
+	UFUNCTION(BlueprintCallable, Category = "Lammps")
+		void InitializeWorkerAndParticleVisualizationManager();
+	UFUNCTION(BlueprintCallable, Category = "Lammps")
+		void SynchronizeLammpsAndParticleVisualizationManager();
+
+	UFUNCTION(BlueprintCallable, Category = "Lammps")
+		void ManageParticle(int32 type_, FColor color_, float radius_);
+	UFUNCTION(BlueprintCallable, Category = "Lammps")
+		void SetSystemScale(float scale_);
 
 	template<typename T>
 	bool ImportDllFunction(FString functionName_, T& functionPtr_);

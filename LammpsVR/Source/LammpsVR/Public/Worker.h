@@ -6,11 +6,11 @@
 /**
  * 
  */
-class LAMMPSVR_API ThreadWorker : FRunnable
+class LAMMPSVR_API Worker : FRunnable
 {
 public:
-	ThreadWorker();
-	~ThreadWorker();
+	Worker();
+	~Worker();
 
 	virtual void DeployWorker() = 0;
 	virtual void SetSignalLock(std::mutex* lock_);

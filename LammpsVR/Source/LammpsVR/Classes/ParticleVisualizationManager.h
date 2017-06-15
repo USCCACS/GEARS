@@ -34,8 +34,13 @@ public:
 	void InitWithLammps(void* lammps_,
 		_LammpsExtract lammpsExtractGlobal_,
 		_LammpsExtract lammpsExtractAtom_);
-	void UpdateWithLammps();
-	void GetCurrentLammpsPositions(TMap<int32, TArray<FVector> > &positions_);
+	void GetCurrentLammpsPositions(_PositionMapTArray &positions_);
+
+	/* XYZ Communication/Synchronization */
+	void InitWithXYZ(_PositionMapPtr &positions_, TSharedPtr<uint32> types_);
+
+	/* Core Update Function. Responsible for changing the rendered positions */
+	virtual void Update();
 
 	/* Particle Creation */
 	void SetSpawnReference(TSubclassOf<AParticle> spawnReference_);
@@ -71,7 +76,7 @@ protected:
 private:
 	/* Particle Tracking/Management */
 	TMap<int32, AParticle*> m_particles;		// Key = type, Value = instantiated particle
-	TMap<int32, TArray<FVector> > m_positions;
+	_PositionMapTArray m_positions;
 
 	/* Lammps Dll Related */
 	void* m_lammps;

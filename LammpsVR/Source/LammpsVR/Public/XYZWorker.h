@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "ThreadWorker.h"
+#include "Worker.h"
 /**
 * Worker class that reads cooridnates and atom types from an XYZ file on a separate thread.
 * When the worker is done, the LammpsController (or whoever deploys the worker) can
 * then access and visualize the parsed coordinates 
 */
-class LAMMPSVR_API XYZWorker : ThreadWorker
+class LAMMPSVR_API XYZWorker : Worker
 {
 public:
 	XYZWorker();

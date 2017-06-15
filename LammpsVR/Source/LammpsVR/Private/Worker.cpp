@@ -1,42 +1,42 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LammpsVR.h"
-#include "ThreadWorker.h"
+#include "Worker.h"
 
-std::mutex ThreadWorker::m_internalLock;
+std::mutex Worker::m_internalLock;
 
-ThreadWorker::ThreadWorker()
+Worker::Worker()
 {
 }
 
-ThreadWorker::~ThreadWorker()
+Worker::~Worker()
 {
 }
 
 void
-ThreadWorker::SetSignalLock(std::mutex* lock_) {
+Worker::SetSignalLock(std::mutex* lock_) {
 	m_signalLock = lock_;
 
 }
 
 #pragma region synch
 void
-ThreadWorker::LockThread() {
+Worker::LockThread() {
 	m_internalLock.lock();
 }
 
 void
-ThreadWorker::UnlockThread() {
+Worker::UnlockThread() {
 	m_internalLock.unlock();
 }
 
 void
-ThreadWorker::EnsureCompletion() {
+Worker::EnsureCompletion() {
 	if (m_thread) m_thread->WaitForCompletion();
 }
 
 void
-ThreadWorker::SignalCompletion() {
+Worker::SignalCompletion() {
 	if (m_signalLock) m_signalLock->unlock();
 }
 #pragma endregion synch
@@ -45,12 +45,12 @@ ThreadWorker::SignalCompletion() {
 #pragma region unused
 
 bool
-ThreadWorker::Init() {
+Worker::Init() {
 	return true;
 }
 
 void
-ThreadWorker::Stop() {
+Worker::Stop() {
 	return;
 }
 

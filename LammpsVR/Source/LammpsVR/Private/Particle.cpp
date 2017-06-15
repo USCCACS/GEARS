@@ -145,7 +145,7 @@ void
 AParticle::UpdateMeshMaterial() {
 	UMaterialInstanceDynamic* dynamicMat = GetMaterial();
 	dynamicMat->SetVectorParameterValue(FName(COLOR), m_color);
-	dynamicMat->SetScalarParameterValue(FName(WIDTH), WidthFromRadius(m_radius));
+	dynamicMat->SetScalarParameterValue(FName(WIDTH), -1*WidthFromRadius(m_radius));
 	dynamicMat->SetScalarParameterValue(FName(HEIGHT), HeightFromRadius(m_radius));
 	SetMaterial(dynamicMat);
 }

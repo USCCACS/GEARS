@@ -3,7 +3,7 @@
 #pragma once
 
 #include "LammpsTypes.h"
-#include "ThreadWorker.h"
+#include "Worker.h"
 /**
  * Worker class that runs a LAMMPS iteration on a separate thread. Ensure that the user (LammpsController) can continue 
  * to function, instead of wait for a large LAMMPS computation to finish. 

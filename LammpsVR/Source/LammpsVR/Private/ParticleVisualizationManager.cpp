@@ -59,7 +59,9 @@ AParticleVisualizationManager::InitWithLammps(void* lammps_,
 		// Note that this does not support systems with variable number of atoms (e.g. Grand Canonical).
 		for (int i = 0; i < natoms; ++i) {
 			int32 utype = static_cast<int32>(type[i]);	// this may not be necessary, but just in case I'll keep it
-			ManageNewParticleType(utype, FColor::MakeRandomColor(), ParticleConst::HydrogenRadius);		// This won't add the new type if it already exists
+			if (!m_particles.Contains(utype)) {
+				ManageNewParticleType(utype, FColor::MakeRandomColor(), ParticleConst::HydrogenRadius);		// This won't add the new type if it already exists
+			}
 			m_particles[utype]->AddInstance(FVector::ZeroVector);
 		}
 	}
@@ -67,15 +69,20 @@ AParticleVisualizationManager::InitWithLammps(void* lammps_,
 }
 
 void 
-AParticleVisualizationManager::GetCurrentLammpsPositions(TMap<int32, 
-										TArray<FVector> > &positions_) {
+AParticleVisualizationManager::GetCurrentLammpsPositions(_PositionMapTArray &positions_) {
+
+}
+
+
+void 
+AParticleVisualizationManager::InitWithXYZ(_PositionMapPtr &positions_, TSharedPtr<uint32> types_) {
 
 }
 
 void 
-AParticleVisualizationManager::UpdateWithLammps() {
+AParticleVisualizationManager::Update() {
 	double** pos = nullptr; int* type = nullptr; int natoms = -1;
-	TMap<int32, TArray<FVector> > positionsByType;
+	_PositionMapTArray positionsByType;
 
 	if (RequestLammpsPositionData(natoms, pos, type)) {
 		// Preprocessing: Initialize the TArrays of position vectors
@@ -139,17 +146,24 @@ AParticleVisualizationManager::ManageNewParticleType(int32 type_, FString typeNa
 
 void
 AParticleVisualizationManager::ManageNewParticleType(int32 type_, FColor color_, float radius_) {
-	if (!m_particles.Contains(type_))
-	{
 		AParticle* newParticle = SpawnNewParticleType(color_, radius_);
 		ManageNewParticleType(type_, newParticle);
-	}
 }
 
 void
 AParticleVisualizationManager::ManageNewParticleType(int32 type_, AParticle* particle_) {
-	if(!m_particles.Contains(type_)) {
+	if (!m_particles.Contains(type_)) {
 		m_particles.Add(type_, particle_);
+	}
+	else {
+		// If the desired particle is already being managed, it will get overwritten
+		int instanceCount = m_particles[type_]->GetInstanceCount();
+		m_particles[type_]->Destroy();
+		
+		m_particles[type_] = particle_;
+		for (int i = 0; i < instanceCount; ++i) {
+			m_particles[type_]->AddInstance(FVector::ZeroVector);
+		}
 	}
 }
 
