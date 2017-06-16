@@ -212,6 +212,7 @@ ALammpsController::InitializeWorkerAndParticleVisualizationManager() {
 
 	m_lammpsWorker = new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
 	m_ParticleVisualizationManager = GetWorld()->SpawnActor<AParticleVisualizationManager>(m_managerReference, GetTransform(), m_spawnParams);
+	m_ParticleVisualizationManager->SetActorRelativeLocation(FVector::ZeroVector);
 }
 
 /*
