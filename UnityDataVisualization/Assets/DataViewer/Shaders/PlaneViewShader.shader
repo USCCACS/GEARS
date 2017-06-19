@@ -52,7 +52,7 @@
 				if (projection < _Distance && projection > -1*_Distance) {
 		  		c.a = 1;
 				} else {
-		  		c.a = 0.1;
+		  		c.a = 0.05;
 		  	}
 		  }
 

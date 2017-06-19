@@ -14,7 +14,7 @@ public class TransitionMatrix {
 	private bool[] animationState;		/*boolean area to store state of animation in the case of a buffer flush*/
 	private bool[] currentState;		/*boolean array to determine heme occupancy*/
 
-	private Queue<Event> buffer;			/*contains all the events to be rendered*/
+	private Queue<KineticMonteCarlo.Event> buffer;			/*contains all the events to be rendered*/
 
 	private System.Random rand;
 
@@ -79,7 +79,7 @@ public class TransitionMatrix {
             ejection[nHemes - 1] = 150000;
 
 			//initialize buffer queue
-			buffer = new Queue<Event>();
+			buffer = new Queue<KineticMonteCarlo.Event>();
 
         }
         catch (Exception e)
@@ -112,20 +112,20 @@ public class TransitionMatrix {
 			double totalRate = 0;
 		
 			/*Build queue of valid Events*/
-			Queue<Event> events = new Queue<Event> ();
+			Queue<KineticMonteCarlo.Event> events = new Queue<KineticMonteCarlo.Event> ();
 			for (int i = 0; i < nHemes; ++i) {
 				//if the ith heme is occupied, then ejection and transfer are possible
 				if (currentState [i]) {
 					//queue up an ejection from this heme if it is possible (i.e. non-zero rate)
 					if (ejection [i] != 0) {
-						events.Enqueue (new EjectionEvent (ejection [i], i));
+						events.Enqueue (new KineticMonteCarlo.EjectionEvent (ejection [i], i));
 						totalRate += ejection [i];
 					}
 					//iterate through all hemes
 					for (int j = 0; j < nHemes; ++j)
 					//if a transfer from heme i to heme j is possible, queue up the corresponding transfer event
 						if (transfer [i, j] != 0) {
-							events.Enqueue (new TransferEvent (transfer [i, j], i, j));
+							events.Enqueue (new KineticMonteCarlo.TransferEvent (transfer [i, j], i, j));
 							totalRate += transfer [i, j];
 						}
 				}
@@ -133,7 +133,7 @@ public class TransitionMatrix {
 			else {
 					//if the injection rate is non-zero, queue up the corresponding injection event
 					if (injection [i] != 0) {
-						events.Enqueue (new InjectionEvent (injection [i], i));
+						events.Enqueue (new KineticMonteCarlo.InjectionEvent (injection [i], i));
 						totalRate += injection [i];
 					}
 				}
@@ -144,10 +144,10 @@ public class TransitionMatrix {
 			double accumulatedRate = 0;
 			double eventDelay = -Math.Log (((double)rand.Next ()) / ((double)Int32.MaxValue)) / totalRate; //calculate how much time this event will take up
 
-		
-			//iterate through the events and sum their rates until the total sum exceeds eventRand.
-			//The event at which this happens is the selected event.
-			Event e;
+
+            //iterate through the events and sum their rates until the total sum exceeds eventRand.
+            //The event at which this happens is the selected event.
+            KineticMonteCarlo.Event e;
 			for (int i = events.Count; i > 0; --i) {
 				e = events.Dequeue ();
 				accumulatedRate += e.getRate ();
@@ -201,15 +201,15 @@ public class TransitionMatrix {
 		}
 	}
 
-	public Event dequeueEvent()
+	public KineticMonteCarlo.Event dequeueEvent()
 	{
-		Event e;
+        KineticMonteCarlo.Event e;
 		lock (buffer) {
 			if (buffer.Count > 0) {
 				e = buffer.Dequeue ();
 			}
 			else {
-				e = Event.NULLEVENT;
+				e = KineticMonteCarlo.Event.NULLEVENT;
 			}
 
 			Monitor.Pulse (buffer);

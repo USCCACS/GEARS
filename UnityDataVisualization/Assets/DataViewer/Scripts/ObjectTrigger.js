@@ -1,6 +1,6 @@
 #pragma strict
 
-var viewingWidth = 0.15;
+var viewingWidth = 0.01;
 var started = false;
 
 function OnTriggerStay (col : Collider) {
@@ -33,7 +33,7 @@ function OnTriggerExit (col : Collider) {
 }
 
 function Start() {
-    viewingWidth = 10;
+    //viewingWidth = 10;
 }
 
 function Update() {
