@@ -7,6 +7,8 @@ std::mutex Worker::m_internalLock;
 
 Worker::Worker()
 {
+	m_thread = nullptr;
+	m_signalLock = nullptr;
 }
 
 Worker::~Worker()
@@ -16,7 +18,6 @@ Worker::~Worker()
 void
 Worker::SetSignalLock(std::mutex* lock_) {
 	m_signalLock = lock_;
-
 }
 
 #pragma region synch

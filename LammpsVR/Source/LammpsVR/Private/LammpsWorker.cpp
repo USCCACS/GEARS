@@ -3,13 +3,18 @@
 #include "LammpsVR.h"
 #include "LammpsWorker.h"
 
-std::mutex LammpsWorker::m_internalLock;
+//std::mutex LammpsWorker::m_internalLock;
 
 #pragma region init
 LammpsWorker::LammpsWorker(void* lammps_, _LammpsCommand commandFunction_, std::mutex* lock_)
 {
 	SetLammpsInstance(lammps_, commandFunction_);
 	SetSignalLock(lock_);
+	m_thread = nullptr;
+}
+
+LammpsWorker::LammpsWorker() {
+	SetLammpsInstance(nullptr, nullptr);
 	m_thread = nullptr;
 }
 
@@ -23,6 +28,17 @@ void
 LammpsWorker::SetLammpsInstance(void* lammps_, _LammpsCommand commandFunction_) {
 	m_lammps = lammps_;
 	m_lammpsCommand = commandFunction_;
+	SetCurrentLammpsCommand();
+}
+
+void
+LammpsWorker::SetCurrentLammpsCommand() {
+	strcpy(m_currentLammpsCommand, "run 1 pre no post no");
+}
+
+void
+LammpsWorker::RunCurrentLammpsCommand() {
+	(*m_lammpsCommand)(m_lammps, m_currentLammpsCommand);
 }
 #pragma endregion init
 
@@ -43,7 +59,7 @@ uint32
 LammpsWorker::Run() {
 	if (m_lammps && m_lammpsCommand) {
 		LockThread();
-		(*m_lammpsCommand)(m_lammps, "run 5 pre no post no");
+		RunCurrentLammpsCommand();
 		UnlockThread();
 
 		SignalCompletion();
@@ -54,47 +70,4 @@ LammpsWorker::Run() {
 	}
 }
 #pragma endregion deployment
-
-void
-LammpsWorker::SetSignalLock(std::mutex* lock_) {
-	m_signalLock = lock_;
-
-}
-
-#pragma region synch
-void
-LammpsWorker::LockThread() {
-	m_internalLock.lock();
-}
-
-void
-LammpsWorker::UnlockThread() {
-	m_internalLock.unlock();
-}
-
-void
-LammpsWorker::EnsureCompletion() {
-	if (m_thread) m_thread->WaitForCompletion();
-}
-
-void
-LammpsWorker::SignalCompletion() {
-	if (m_signalLock) m_signalLock->unlock();
-}
-#pragma endregion synch
-
-
-#pragma region unused
-
-bool
-LammpsWorker::Init() {
-	return true;
-}
-
-void
-LammpsWorker::Stop() {
-	return;
-}
-
-#pragma endregion unused
 

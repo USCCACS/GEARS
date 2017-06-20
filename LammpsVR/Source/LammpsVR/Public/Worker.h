@@ -6,7 +6,7 @@
 /**
  * 
  */
-class LAMMPSVR_API Worker : FRunnable
+class LAMMPSVR_API Worker : public FRunnable
 {
 public:
 	Worker();

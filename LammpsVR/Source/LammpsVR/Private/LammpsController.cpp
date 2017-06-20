@@ -207,12 +207,21 @@ ALammpsController::LammpsIsActive() {
  * This is meant to be called from the Blueprint Editor before spawning the particles in the scene.
  */
 void 
-ALammpsController::InitializeWorkerAndParticleVisualizationManager() {
+ALammpsController::InitializeWorkerAndParticleVisualizationManager(bool animationMode_) {
 	RunLammpsScript(m_scriptName);
 
-	m_lammpsWorker = new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
+	m_animationMode = animationMode_;
+	m_lammpsWorker = m_animationMode ? new LammpsRerunWorker(m_lammps, m_lammpsCommand, &m_lammpsLock) :
+									   new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
+
 	m_ParticleVisualizationManager = GetWorld()->SpawnActor<AParticleVisualizationManager>(m_managerReference, GetTransform(), m_spawnParams);
 	m_ParticleVisualizationManager->SetActorRelativeLocation(FVector::ZeroVector);
+}
+
+void
+ALammpsController::SetupAnimationState(FString dumpfilePrefix_, int32 firstTimeStep_, int32 lastTimeStep_, int32 stepSize_) {
+	LammpsRerunWorker* rerunWorker = static_cast<LammpsRerunWorker*>(m_lammpsWorker);
+	rerunWorker->SetupAnimationState(dumpfilePrefix_, firstTimeStep_, lastTimeStep_, stepSize_);
 }
 
 /*

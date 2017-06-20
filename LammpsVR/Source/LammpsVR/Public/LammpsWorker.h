@@ -8,40 +8,25 @@
  * Worker class that runs a LAMMPS iteration on a separate thread. Ensure that the user (LammpsController) can continue 
  * to function, instead of wait for a large LAMMPS computation to finish. 
  */
-class LAMMPSVR_API LammpsWorker :FRunnable 
+class LAMMPSVR_API LammpsWorker : public Worker
 {
 public:
 	LammpsWorker(void* lammps_, _LammpsCommand commandFunction_, std::mutex* lock_);
+	LammpsWorker();
 	~LammpsWorker();
 
 	void SetLammpsInstance(void* lammps_, _LammpsCommand commandFunction_);
-	/*virtual void DeployWorker();
-	virtual uint32 Run();*/
-
-	virtual void DeployWorker();
-	virtual void SetSignalLock(std::mutex* lock_);
 
 	/* Runnable Interface (all must be defined, but only run is used) */
-	virtual bool Init();
 	virtual uint32 Run();
-	virtual void Stop();
+	virtual void DeployWorker();
 
-	/* Clean up Functions */
-	void EnsureCompletion();
-	void SignalCompletion();
-
-	/* Internal Synchronization */
-	static void LockThread();
-	static void UnlockThread();
+	virtual void SetCurrentLammpsCommand();
+	virtual void RunCurrentLammpsCommand();
 
 protected:
-	/* Multi-Threading Related */
-	FRunnableThread* m_thread;              // Instance of the thread that actually run separate from unreal
-	std::mutex* m_signalLock;				// Unlocking this signals to the LammpsController that an iteration has finished
-	static std::mutex m_internalLock;		// Just in case
-
-private:
 	/* Lammps Related */
 	void* m_lammps;
 	_LammpsCommand m_lammpsCommand;
+	char m_currentLammpsCommand[256];
 };

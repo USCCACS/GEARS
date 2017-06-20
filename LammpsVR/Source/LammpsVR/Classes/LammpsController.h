@@ -4,7 +4,7 @@
 
 #include "LammpsTypes.h"
 #include "ParticleVisualizationManager.h"
-#include "LammpsWorker.h"
+#include "LammpsRerunWorker.h"
 #include <mutex>
 
 #include "GameFramework/Actor.h"
@@ -45,9 +45,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
 		FString ReadLammpsScript(FString scriptName_);
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
-		void InitializeWorkerAndParticleVisualizationManager();
+		void InitializeWorkerAndParticleVisualizationManager(bool animationMode_);
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
 		void SynchronizeLammpsAndParticleVisualizationManager();
+	UFUNCTION(BlueprintCallable, Category = "Lammps")
+		void SetupAnimationState(FString dumpfilePrefix_, int32 firstTimeStep_, int32 lastTimeStep_, int32 stepSize_);
 
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
 		void ManageParticle(int32 type_, FColor color_, float radius_);
@@ -88,6 +90,8 @@ protected:
 	/* Simulation Control Variables */
 	UPROPERTY(BlueprintReadWrite)
 		bool m_paused = false;
+	UPROPERTY(BlueprintReadWrite)
+		bool m_animationMode = false;
 
 	/* For error checking before you do something really bad */
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
