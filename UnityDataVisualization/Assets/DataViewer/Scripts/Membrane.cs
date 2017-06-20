@@ -19,14 +19,14 @@ public class Membrane : MonoBehaviour {
 	void Start () {
 		startPos = transform.position;
 		startRot = transform.eulerAngles;
-		/*
-		foreach (Transform grandChild in transform.GetChild (1)) {
+		
+		/*foreach (Transform grandChild in transform.GetChild (1)) {
 			grandChild.gameObject.AddComponent<MembranePiece>();
 			MeshCollider mc = grandChild.gameObject.AddComponent<MeshCollider>();
 			mc.convex = true;
 			mc.isTrigger = true;
-		}
-		*/
+		}*/
+		
 	}
 	
 	// Update is called once per frame

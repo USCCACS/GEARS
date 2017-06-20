@@ -68,7 +68,11 @@ sysinfo.txt
 
 # Leap Motion
 Assets/LeapMotion*
+Assets/SteamVR*
 Assets/Plugins*
 Assets/KineticMonteCarlo/Prefabs/proteinonly*
 Assets/DataViewer/Objects/Membrane*
 Assets/DataViewer/Objects*
+
+*.obj
+*.mtl

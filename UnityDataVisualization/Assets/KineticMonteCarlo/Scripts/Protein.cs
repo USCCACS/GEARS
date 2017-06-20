@@ -10,7 +10,7 @@ public class Protein : MonoBehaviour {
 	public string location_filename;// = "Input/hemes.xyz";
 
 	/*Event related variables (used to render events and alter speeds)*/
-	private Event currentEvent = Event.NULLEVENT;
+	private KineticMonteCarlo.Event currentEvent = KineticMonteCarlo.Event.NULLEVENT;
 	public Slider slider;
 	private float sliderSpeed = 0.01f;
 	public static double frameDuration = 1e-6;
