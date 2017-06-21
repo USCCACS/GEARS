@@ -111,7 +111,8 @@ void ALammpsController::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	delete m_lammpsWorker;
 	m_lammpsWorker = nullptr;
 
-	m_ParticleVisualizationManager->Destroy();
+	if (m_ParticleVisualizationManager != nullptr) 
+		m_ParticleVisualizationManager->Destroy();
 }
 
 // Called every frame
@@ -207,15 +208,34 @@ ALammpsController::LammpsIsActive() {
  * This is meant to be called from the Blueprint Editor before spawning the particles in the scene.
  */
 void 
-ALammpsController::InitializeWorkerAndParticleVisualizationManager(bool animationMode_) {
+ALammpsController::InitializeWorkerAndParticleVisualizationManager() {
+	// Runs lammps script, including opening lammps 
 	RunLammpsScript(m_scriptName);
 
-	m_animationMode = animationMode_;
-	m_lammpsWorker = m_animationMode ? new LammpsRerunWorker(m_lammps, m_lammpsCommand, &m_lammpsLock) :
-									   new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
+	if (LammpsIsActive()) {
+		// Initialize the correct worker depending on the M_ANIMATIONMODE boolean
+		m_lammpsWorker = m_animationMode ? new LammpsRerunWorker(m_lammps, m_lammpsCommand, &m_lammpsLock) :
+										   new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
 
-	m_ParticleVisualizationManager = GetWorld()->SpawnActor<AParticleVisualizationManager>(m_managerReference, GetTransform(), m_spawnParams);
-	m_ParticleVisualizationManager->SetActorRelativeLocation(FVector::ZeroVector);
+		// Initialize the particle visualization system
+		m_ParticleVisualizationManager = GetWorld()->SpawnActor<AParticleVisualizationManager>(m_managerReference, GetTransform(), m_spawnParams);
+		m_ParticleVisualizationManager->SetActorRelativeLocation(FVector::ZeroVector);
+
+		// Add the custom chosen particle parameters. Otherwise, default values will be used
+		for (auto Instance : m_ManagedParticles) {
+			float radius = Instance.Value.Radius;
+			FColor color = Instance.Value.Color;
+			m_ParticleVisualizationManager->ManageNewParticleType(Instance.Key, color, radius);
+		}
+
+		// Synchronize the particle visualization manager with Lammps
+		m_ParticleVisualizationManager->InitWithLammps(m_lammps, m_lammpsExtractGlobal, m_lammpsExtractAtom);
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(666, 30.0f, FColor::Red, "Error: Can't initialize particle visualization, because lammps Dll failed",
+			true, FVector2D(2.0f, 2.0f));
+	}
+	
 }
 
 void
@@ -226,18 +246,11 @@ ALammpsController::SetupAnimationState(FString dumpfilePrefix_, int32 firstTimeS
 
 /*
 * Starts up the Lammps script, and then instantiates the Lammps worker and the particle visualization manager.
-* This is meant to be called from the Blueprint Editor after spawning the particles in the scene.
+* These are wrappers meant to be accessed from the Blueprint Editor
 */
 void 
-ALammpsController::SynchronizeLammpsAndParticleVisualizationManager() {
-	if (m_lammps) 
-		m_ParticleVisualizationManager->InitWithLammps(m_lammps, m_lammpsExtractGlobal, m_lammpsExtractAtom);
-}
-
-void 
-ALammpsController::ManageParticle(int32 type_, FColor color_, float radius_) {
-	if (m_ParticleVisualizationManager)
-		m_ParticleVisualizationManager->ManageNewParticleType(type_, color_, radius_);
+ALammpsController::ManageParticle(int32 type_, float radius_, FColor color_) {
+	m_ManagedParticles.Add(type_, FParticleInstanceData(radius_, color_));
 }
 
 void

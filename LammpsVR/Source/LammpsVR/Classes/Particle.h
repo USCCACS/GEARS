@@ -5,6 +5,37 @@
 #include "GameFramework/Actor.h"
 #include "Particle.generated.h"
 
+USTRUCT()
+struct FParticleInstanceData
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, Displayname = "Radius")
+		float Radius;
+	UPROPERTY(EditAnywhere, Displayname = "Color")
+		FColor Color;
+
+	FParticleInstanceData()
+		: Radius(1.0f)
+		, Color(FColor::Red)
+	{
+	}
+
+	FParticleInstanceData(float radius_, FColor color_)
+		: Radius(radius_)
+		, Color(color_)
+	{
+	}
+
+	friend FArchive& operator<<(FArchive& Ar, FParticleInstanceData& InstanceData)
+	{
+		// @warning BulkSerialize: FParticleInstanceData is serialized as memory dump
+		// See TArray::BulkSerialize for detailed description of implied limitations.
+		Ar << InstanceData.Radius << InstanceData.Color;
+		return Ar;
+	}
+};
+
 UCLASS()
 class LAMMPSVR_API AParticle : public AActor
 {
@@ -43,11 +74,11 @@ public:
 protected:
 	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		class UHierarchicalInstancedStaticMeshComponent* m_Mesh;
-	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "ParticleMeshComponents", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float m_radius = 25.0f;
 	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float m_scale = 1.0f;
-	UPROPERTY(Category = "ParticleMeshComponents", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "ParticleMeshComponents", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FColor m_color = FColor::Magenta;
 
 	virtual void ConstructorHelper();

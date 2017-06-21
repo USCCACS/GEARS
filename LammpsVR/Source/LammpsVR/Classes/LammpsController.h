@@ -45,14 +45,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
 		FString ReadLammpsScript(FString scriptName_);
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
-		void InitializeWorkerAndParticleVisualizationManager(bool animationMode_);
-	UFUNCTION(BlueprintCallable, Category = "Lammps")
-		void SynchronizeLammpsAndParticleVisualizationManager();
+		void InitializeWorkerAndParticleVisualizationManager();
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
 		void SetupAnimationState(FString dumpfilePrefix_, int32 firstTimeStep_, int32 lastTimeStep_, int32 stepSize_);
 
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
-		void ManageParticle(int32 type_, FColor color_, float radius_);
+		void ManageParticle(int32 type_, float radius_, FColor color_);
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
 		void SetSystemScale(float scale_);
 
@@ -61,8 +59,8 @@ public:
 
 protected:
 	/* My homeboys */
-	LammpsWorker* m_lammpsWorker;
-	AParticleVisualizationManager* m_ParticleVisualizationManager;
+	LammpsWorker* m_lammpsWorker = nullptr;
+	AParticleVisualizationManager* m_ParticleVisualizationManager = nullptr;
 	std::mutex m_lammpsLock;
 
 	/* Dll Variables */
@@ -77,21 +75,36 @@ protected:
 	_LammpsClose m_lammpsClose;
 
 	/* Files/Input Scripts */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Lammps")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lammps", Displayname = "Dll Name")
 		FString m_dllName;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Lammps")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lammps", Displayname = "Input Script")
 		FString m_scriptName;
+
+	/* Simulation Control Variables */
+	UPROPERTY(BlueprintReadWrite)
+		bool m_paused = false;
+
+	/* Animation Control Variable */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lammps")
+		bool m_animationMode = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", Displayname = "Dump File Prefix")
+		FString m_dumpFilePrefix;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", Displayname = "First TimeStep")
+		int32 m_firstTimeStep;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", Displayname = "Final TimeStep")
+		int32 m_lastTimeStep;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", Displayname = "TimeStep Size")
+		int32 m_stepSize;
 
 	/* Spawning/Rendering Variables */
 	FActorSpawnParameters m_spawnParams;
 	UPROPERTY(EditDefaultsOnly, Category = "Particle Management")
 		TSubclassOf<AParticleVisualizationManager> m_managerReference;
-
-	/* Simulation Control Variables */
-	UPROPERTY(BlueprintReadWrite)
-		bool m_paused = false;
-	UPROPERTY(BlueprintReadWrite)
-		bool m_animationMode = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Particle Management", Displayname = "System Scale")
+		float m_systemScale;
+	UPROPERTY(EditAnywhere, Category = "Particle Management", Displayname = "Particles")
+		TMap<int32, FParticleInstanceData> m_ManagedParticles;
 
 	/* For error checking before you do something really bad */
 	UFUNCTION(BlueprintCallable, Category = "Lammps")
