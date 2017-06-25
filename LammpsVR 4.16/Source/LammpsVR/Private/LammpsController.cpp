@@ -3,6 +3,8 @@
 #include "LammpsVR.h"
 #include "LammpsController.h"
 
+FString EDITOR_GAMEDIR = FPaths::GameDir();
+FString GAME_GAMEDIR = FPaths::ConvertRelativePathToFull(FPaths::RootDir());
 
 // Sets default values
 ALammpsController::ALammpsController()
@@ -139,7 +141,7 @@ void ALammpsController::Tick(float DeltaTime)
 #pragma region LAMMPS_IMPORT
 bool 
 ALammpsController::ImportLammps(FString folder_, FString filename_) {
-	FString filePath = *FPaths::GameDir() + folder_ + "/" + filename_;
+	FString filePath = EDITOR_GAMEDIR + folder_ + "/" + filename_;
 	if (FPaths::FileExists(filePath)) {
 		m_dllHandle = FPlatformProcess::GetDllHandle(*filePath);
 		if (m_dllHandle == NULL) {
@@ -183,10 +185,10 @@ ALammpsController::RunLammpsScript(FString scriptName_) {
 
 FString 
 ALammpsController::ReadLammpsScript(FString scriptName_) {
-	FString gameDir = FPaths::GameDir();
+  FString gameDir = EDITOR_GAMEDIR;
 	_wchdir(*gameDir);
 
-	FString scriptPath = FPaths::GameDir() + "/Scripts/" + scriptName_;
+	FString scriptPath = gameDir + "/Scripts/" + scriptName_;
 	FString script = "";
 
 	FFileHelper::LoadFileToString(script, *scriptPath);
