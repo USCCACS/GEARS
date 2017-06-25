@@ -1,3 +1,5 @@
+package omp 40
+suffix omp
 boundary	p p p
 atom_style atomic
    # I opened the file in ovito and exported the first frame to LAMMPS Data format. This is the file that contains 
