@@ -11,11 +11,13 @@ LammpsWorker::LammpsWorker(void* lammps_, _LammpsCommand commandFunction_, std::
 	SetLammpsInstance(lammps_, commandFunction_);
 	SetSignalLock(lock_);
 	m_thread = nullptr;
+	m_threadID = 0;
 }
 
 LammpsWorker::LammpsWorker() {
 	SetLammpsInstance(nullptr, nullptr);
 	m_thread = nullptr;
+	m_threadID = 0;
 }
 
 LammpsWorker::~LammpsWorker()
@@ -47,7 +49,9 @@ void
 LammpsWorker::DeployWorker() {
 	delete m_thread;
 	if (m_lammps) {
-		m_thread = FRunnableThread::Create(this, TEXT("LammpsWorker"), 0, TPri_Highest);
+		FString threadName = "LammpsWorker" + m_threadID;
+		++m_threadID;
+		m_thread = FRunnableThread::Create(this, *threadName, 0, TPri_Lowest);
 	}
 	else {
 		m_thread = nullptr;

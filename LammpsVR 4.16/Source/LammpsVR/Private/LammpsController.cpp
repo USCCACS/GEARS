@@ -3,8 +3,9 @@
 #include "LammpsVR.h"
 #include "LammpsController.h"
 
-FString EDITOR_GAMEDIR = FPaths::GameDir();
-FString GAME_GAMEDIR = FPaths::ConvertRelativePathToFull(FPaths::RootDir());
+FString EDITOR_ROOT = FPaths::GameDir();
+FString GAME_ROOT = FPaths::ConvertRelativePathToFull(FPaths::RootDir());
+FString ROOT = EDITOR_ROOT;
 
 // Sets default values
 ALammpsController::ALammpsController()
@@ -141,7 +142,7 @@ void ALammpsController::Tick(float DeltaTime)
 #pragma region LAMMPS_IMPORT
 bool 
 ALammpsController::ImportLammps(FString folder_, FString filename_) {
-	FString filePath = EDITOR_GAMEDIR + folder_ + "/" + filename_;
+	FString filePath = ROOT + folder_ + "/" + filename_;
 	if (FPaths::FileExists(filePath)) {
 		m_dllHandle = FPlatformProcess::GetDllHandle(*filePath);
 		if (m_dllHandle == NULL) {
@@ -185,7 +186,7 @@ ALammpsController::RunLammpsScript(FString scriptName_) {
 
 FString 
 ALammpsController::ReadLammpsScript(FString scriptName_) {
-  FString gameDir = EDITOR_GAMEDIR;
+  FString gameDir = ROOT;
 	_wchdir(*gameDir);
 
 	FString scriptPath = gameDir + "/Scripts/" + scriptName_;
@@ -224,7 +225,7 @@ ALammpsController::InitializeWorkerAndParticleVisualizationManager() {
 
 	if (LammpsIsActive()) {
 		// Initialize the correct worker depending on the M_ANIMATIONMODE boolean
-		m_lammpsWorker = m_animationMode ? new LammpsRerunWorker(m_lammps, m_lammpsCommand, &m_lammpsLock) :
+		m_lammpsWorker = m_animationMode ? new LammpsRerunWorker(m_lammps, m_lammpsCommand, &m_lammpsLock, ROOT) :
 										   new LammpsWorker(m_lammps, m_lammpsCommand, &m_lammpsLock);
 
 		// Initialize the particle visualization system

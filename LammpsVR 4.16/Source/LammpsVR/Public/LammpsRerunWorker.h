@@ -9,8 +9,8 @@
 class LAMMPSVR_API LammpsRerunWorker : public LammpsWorker
 {
 public:
-	LammpsRerunWorker(void* lammps_, _LammpsCommand commandFunction_, std::mutex* lock_) : 
-		LammpsWorker(lammps_, commandFunction_, lock_) {}
+	LammpsRerunWorker(void* lammps_, _LammpsCommand commandFunction_, std::mutex* lock_, FString rootDir_) : 
+		LammpsWorker(lammps_, commandFunction_, lock_), m_rootDir(rootDir_) {}
 	LammpsRerunWorker();
 	~LammpsRerunWorker();
 
@@ -30,5 +30,6 @@ protected:
 	uint32 m_currentTimeStep = 0;
 	uint32 m_stepSize = 0;
 
+	FString m_rootDir;
 	FString m_dumpFilePrefix = "";
 };

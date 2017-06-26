@@ -43,7 +43,7 @@ LammpsRerunWorker::GetCurrentDumpFilename() {
 
 bool
 LammpsRerunWorker::CurrentDumpFileExists() {
-	FString filePath = *FPaths::GameDir() + FString("/") + GetCurrentDumpFilename();
+	FString filePath = m_rootDir + FString("/") + GetCurrentDumpFilename();
 	return FPaths::FileExists(filePath);
 }
 #pragma endregion dumpfile

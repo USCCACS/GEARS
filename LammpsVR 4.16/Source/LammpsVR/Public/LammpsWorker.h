@@ -29,4 +29,7 @@ protected:
 	void* m_lammps;
 	_LammpsCommand m_lammpsCommand;
 	char m_currentLammpsCommand[256];
+
+	/* Thread Tracking */
+	int64 m_threadID;
 };
