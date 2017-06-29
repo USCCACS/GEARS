@@ -1,4 +1,4 @@
-# Game-Engine Assisted Research platform for Scientific Computing (GEARS) in Virtual Reality
+# Game-Engine Assisted Research framework for Scientific computing (GEARS) in Virtual Reality
 
 ## Unity GEARS
 ### - UnityDataVisualization
