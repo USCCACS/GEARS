@@ -1,8 +1,8 @@
 #/atom 1 silicon
 #/atom 2 oxygen
 #/bond 1 2 2.6
-package omp 40
-suffix omp
+#package omp 40
+#suffix omp
 
 units                   metal
 boundary                p p p

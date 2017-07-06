@@ -5,7 +5,6 @@
 
 FString EDITOR_ROOT = FPaths::GameDir();
 FString GAME_ROOT = FPaths::ConvertRelativePathToFull(FPaths::RootDir());
-FString ROOT = EDITOR_ROOT;
 
 // Sets default values
 ALammpsController::ALammpsController()
@@ -35,6 +34,13 @@ ALammpsController::ALammpsController()
 void ALammpsController::BeginPlay()
 {
 	Super::BeginPlay();
+	if (GetWorld()->WorldType == EWorldType::Preview 
+		|| GetWorld()->WorldType == EWorldType::PIE) {
+		ROOT = EDITOR_ROOT;
+	}
+	else if (GetWorld()->WorldType == EWorldType::Game) {
+		ROOT = GAME_ROOT;
+	}
 //	bool success = ImportLammps(FString("LammpsDll"), m_dllName);
 //
 //	if (success) {
@@ -110,6 +116,8 @@ void ALammpsController::EndPlay(const EEndPlayReason::Type EndPlayReason) {
     m_lammpsWorker->EnsureCompletion();
   delete m_lammpsWorker;
   m_lammpsWorker = nullptr;
+
+  if (LammpsIsActive())
 	(*m_lammpsClose)(m_lammps);
 
 	m_lammps = nullptr;
