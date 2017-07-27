@@ -8,7 +8,7 @@
 
 ## Summary
 
-## Unreal GEARS
+## Unity GEARS
 ### Sample Use Cases (include blurbs on each)
 #### VCM
 #### Data Viewing Interface
