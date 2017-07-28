@@ -7,17 +7,18 @@
 -----------------
 
 ## Summary
+Lorem Ipsum
 
 ## Unity GEARS
 ### Sample Use Cases (include blurbs on each)
-#### VCM
-#### Data Viewing Interface
-#### Real-time Simulator
+1. VCM
+2. Data Viewing Interface
+3. Real-time Simulator
 
 ## Unreal GEARS
 ### Sample Use Cases (include blurbs on each)
-#### LAMMPS Integrated Simulator
-#### LAMMPS Integrated Playback Engine
+1. LAMMPS Integrated Simulator
+2. LAMMPS Integrated Playback Engine
 
 ## License
 
