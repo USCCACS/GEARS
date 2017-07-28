@@ -1,0 +1,57 @@
+# Compiling LAMMPS for GEARS in Unreal Engine 4.16
+
+## System Requirements
+* Bash on Ubuntu on Windows ([Installation Guide](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide))
+
+## How To
+The following commands are all executed from the Bash On Ubuntu on Windows terminal
+1) Install these the g++, mingw64, and git packages
+```bash
+$	sudo apt-get install g++
+$	sudo apt-get install mingw-w64
+$	sudo apt-get install git
+```
+2) Clone the LAMMPS repository from GitHub, and then enter the source directory
+```bash
+$	git clone https://github.com/lammps/lammps
+$	cd lammps/src/
+```
+3) Copy MPI STUBS into the source directory (MPI is not actually used in GEARS, however the STUBS are still needed for compilation)
+```bash
+$	cp ./STUBS/mpi.h ./mpi.h
+$	cp ./STUBS/mpi.c ./mpi.cpp
+```
+4) Edit lammps/src/library.h to export the necessary LAMMPS control functions:
+```
+* lammps_open_no_mpi(int, char **, void **);
+* lammps_close(void *);
+* lammps_command(void *, char *);
+* lammps_extract_global(void *, char *);
+* lammps_extract_atom(void *, char *);
+```
+5) Edit Makefile for mingw64:
+	File location: ```lammps/src/MAKE/MACHINES/Makefile.mingw64-cross
+	1. Remove unnecessary compilation flags
+		```
+		-lmpi_mingw64 (under MPI_LIB)
+		-ljpeg -lpng -lz (under JPG_LIB)
+		-lwsock32 -lquadmath (under LIB)
+		```
+	2. Add these new compilation flags
+		```
+		-static-libgcc -static-libstdc++ -mwindows (under SHLIBFLAGS)
+		```
+6) Compile by calling this from the source directory:
+```bash
+$	make mingw64-cross mode=shlib
+```
+7) Move the compiled library file to the LAMMPS Dll folder in the Unrela Content directory
+```bash
+$	mv liblammps_mingw64-cross.so /mnt/c/PATH/TO/UNREALGEARS/Content/LammpsResource/LammpsDll/lammps.dll
+```
+
+## System/Installation Check
+To test if LAMMPS actually works on your computer, you can make an executable instead of a linked library, then run it via the Windows command prompt. Ensure that the mode=shlib argument is removed in the compilation step to create the executable. Then, when moving it to a Windows 10 accessible location, add the .exe extension to the file.
+
+## Customization
+If you want to change....do this
