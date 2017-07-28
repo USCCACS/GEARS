@@ -1,0 +1,54 @@
+# ANP_oxidation
+units           real
+
+## Boundary condition
+dimension       3
+boundary        p p p
+processors      * * *
+
+
+# Create geometry from a structure file
+atom_style      charge
+read_data       Scripts/CVD/data_small.ANP
+
+# Apply ReaxFF potentials
+pair_style      reax/c Scripts/CVD/lmp_control
+pair_coeff      * * Scripts/CVD/ffield.reax C H O S Mo Ni Al
+
+# Boost  neibors (default = 2000)
+#neigh_modify page 1000000  one  10000
+neighbor        2 bin
+neigh_modify    every 10 delay 0 check no
+
+# group
+group 2 type 3
+group 3 type 4
+group 4 type 5 
+velocity        2  create   4000.0  2000000  rot yes dist gaussian
+velocity        3  create   4000.0  2000000  rot yes dist gaussian
+velocity        4  create   4000.0  2000000  rot yes dist gaussian
+fix             1  all  qeq/reax  1  0.0  10.0  1e-6  reax/c
+fix             2  2  nvt temp  4000.0  4000.0  25.0
+fix             3  3  nvt temp 4000.0  4000.0  25.0
+fix             4  4  nvt temp 4000.0  4000.0  25.0
+fix             5  4 spring/self 20.0
+compute         pe  all  pe/atom
+compute         ke  all  ke/atom
+variable        temp atom c_ke/(0.0019872041*1.5)
+
+# Time step
+timestep        1.5
+
+# Output setting 
+thermo          10
+thermo_style    custom step pe ke etotal evdwl ecoul press temp vol density
+thermo_modify   lost warn format float %15.14g
+#dump            1 all custom 100 Scripts/CVD/CVD_3000K.dump id type q x y z c_pe c_ke v_temp
+#restart         500000  restart
+
+#dump_modify     1 sort id 
+#minimize        1.0e-7 1.0e-6 5000 10000
+
+#             M  K  Z
+# Run MD      |  |  |
+run           0

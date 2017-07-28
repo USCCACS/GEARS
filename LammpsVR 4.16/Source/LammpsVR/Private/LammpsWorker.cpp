@@ -51,7 +51,7 @@ LammpsWorker::DeployWorker() {
 	if (m_lammps) {
 		FString threadName = "LammpsWorker" + m_threadID;
 		++m_threadID;
-		m_thread = FRunnableThread::Create(this, *threadName, 0, TPri_Lowest);
+		m_thread = FRunnableThread::Create(this, *threadName, 0, TPri_Highest);
 	}
 	else {
 		m_thread = nullptr;

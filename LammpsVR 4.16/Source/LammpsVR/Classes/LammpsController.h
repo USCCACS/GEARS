@@ -80,7 +80,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lammps", Displayname = "Input Script")
 		FString m_scriptName;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Lammps", Displayname = "Lammps Files Root Directory")
-		FString ROOT = FPaths::GameDir();
+		FString m_ResourceDir = FPaths::GameContentDir() + FString("LammpsResource/");
 
 	/* Simulation Control Variables */
 	UPROPERTY(BlueprintReadWrite)
