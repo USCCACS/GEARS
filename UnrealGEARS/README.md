@@ -26,18 +26,18 @@
   1. Make a new level
   2. From Blueprints/Simulation, drag the BP_LammpsController blueprint class into the level editor preview window (setting to the origin works fine).
   3. Setup the BP_LammpsController (via the Details window in the Unreal Editor):
-    * LAMMPS Dll and Input Script
-      3.1 Specify the dll you wish to use under the "Dll Name" parameter in the "Lammps" Category. The dll must be located in the LammpsEditor/Content/LammpsResource/LammpsDll/ directory.
-      3.2 Specify the LAMMPS input script for the simulation in the "Input Script" parameter under the "Lammps" category. This script must be located in the LammpsEditor/Content/LammpsResource/Scripts/ directory.
-      3.3 Choose either Simulation Mode or Animation Mode
-        3.3.1 Simulation Mode 
-          Make sure that the "Animation Mode" box is unchecked.
-        3.3.2 Animation Mode
-          Check the box label "Animation Mode". You will then need to specify which time steps to visualize based on LAMMPS dump files. LAMMPS dump files must be located in the Content/LammpsResource/LammpsDump/ directory. Dump filename must start with a prefix that you specify, followed by a "." and the time step number. Each dump file should only contain the state of a single time step. Example: "fracture.1234567.dump". Prefix, starting time step, final time step, and animation time step intervals can be specified under the "Animation" category in the BP_LammpsController Details window.
-    * Particle Colors and Radii
-      By default, a particle visualization manager will assign a fixed particle radius and random color to all particle types in the LAMMPS instance. However, if you would like to customize the radii and color of your particles, you can edit them under the "Particle Management" category in the Details windows of the Unreal Editor. To customize:
-      1. Select the "+" sign next to the "Particles" parameter under the "Particle Management" category to add a new particle type to provide a custom color and radius for a new particle
-      2. Specify the particle's LAMMPS type number, radius (in atomic units), and color.
+	* LAMMPS Dll and Input Script
+	  1. Specify the dll you wish to use under the "Dll Name" parameter in the "Lammps" Category. The dll must be located in the LammpsEditor/Content/LammpsResource/LammpsDll/ directory.
+	  2. Specify the LAMMPS input script for the simulation in the "Input Script" parameter under the "Lammps" category. This script must be located in the LammpsEditor/Content/LammpsResource/Scripts/ directory.
+	  3. Choose either Simulation Mode or Animation Mode
+		1. Simulation Mode 
+		  Make sure that the "Animation Mode" box is unchecked.
+		2. Animation Mode
+		  Check the box label "Animation Mode". You will then need to specify which time steps to visualize based on LAMMPS dump files. LAMMPS dump files must be located in the Content/LammpsResource/LammpsDump/ directory. Dump filename must start with a prefix that you specify, followed by a "." and the time step number. Each dump file should only contain the state of a single time step. Example: "fracture.1234567.dump". Prefix, starting time step, final time step, and animation time step intervals can be specified under the "Animation" category in the BP_LammpsController Details window.
+	* Particle Colors and Radii
+	  By default, a particle visualization manager will assign a fixed particle radius and random color to all particle types in the LAMMPS instance. However, if you would like to customize the radii and color of your particles, you can edit them under the "Particle Management" category in the Details windows of the Unreal Editor. To customize:
+	  1. Select the "+" sign next to the "Particles" parameter under the "Particle Management" category to add a new particle type to provide a custom color and radius for a new particle
+	  2. Specify the particle's LAMMPS type number, radius (in atomic units), and color.
 
 3. Default User Controller Setup:
   1. Drag a player spawning point into the editor preview window. The blueprint for this can be found in the Modes window of the Unreal Editor.
