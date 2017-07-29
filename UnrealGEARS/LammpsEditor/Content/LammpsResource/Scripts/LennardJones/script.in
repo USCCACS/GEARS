@@ -1,8 +1,8 @@
 #package omp 40
 #suffix omp
-variable	xx equal 40
-variable	yy equal 40
-variable	zz equal 40
+variable	xx equal 10
+variable	yy equal 10
+variable	zz equal 10
 
 units		lj
 atom_style	atomic
