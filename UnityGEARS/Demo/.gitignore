@@ -74,5 +74,7 @@ Assets/Plugins*
 # Other VR Assets
 Assets/OVR*
 
-
+# Geometry Data
+*GeometryData/*
+*GeometryData.meta
 
