@@ -1,3 +1,0 @@
-UnityGEARS/Assets/Demo2-VirtualConfocalMicroscopy/GeometryData/exfo.obj filter=lfs diff=lfs merge=lfs -text
-UnityGEARS/Assets/Demo1-DataViewer/GeometryData/tellurine_contactlens.obj filter=lfs diff=lfs merge=lfs -text
-UnityGEARS/Assets/Demo3-Simulation/Prefabs/proteinonly.obj filter=lfs diff=lfs merge=lfs -text
