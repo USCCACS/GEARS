@@ -75,6 +75,6 @@ Assets/Plugins*
 Assets/OVR*
 
 # Geometry Data
-*GeometryData/*
+*GeometryData/
 *GeometryData.meta
 
