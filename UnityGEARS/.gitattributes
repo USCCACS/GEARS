@@ -2,3 +2,5 @@ Demo/Assets/Demo1-DataViewer/GeometryData.zip filter=lfs diff=lfs merge=lfs -tex
 Demo/Assets/Demo2-VirtualConfocalMicroscopy/GeometryData.zip filter=lfs diff=lfs merge=lfs -text
 Editor/Assets/Demo1-DataViewer/GeometryData.zip filter=lfs diff=lfs merge=lfs -text
 Editor/Assets/Demo2-VirtualConfocalMicroscopy/GeometryData.zip filter=lfs diff=lfs merge=lfs -text
+Editor/Library/metadata/2a/2a4071be88a235f4189eff08784a8f10 filter=lfs diff=lfs merge=lfs -text
+Editor/Library/metadata/55/550a3214753256d4f82c64bfdeb3fda7 filter=lfs diff=lfs merge=lfs -text
