@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 
-import optparse
+import argparse
 import zipfile
 import os
 import os.path
 import subprocess
 import sys
+
+# Parse Arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("--interactive", help="Adds Interactive Data Viewer demo to the build", action="store_true")
+parser.add_argument("--vcm", help="Adds the Virtual Confocal Microscopy demo to the build", action="store_true")
+
+args = parser.parse_args();
 
 # Unzip Geometry Data Files
 assetsPath = './Editor/Assets/'
@@ -18,26 +25,26 @@ demo2Dir = assetsPath + 'Demo2-VirtualConfocalMicroscopy/'
 demo1GeometryZipPath = demo1Dir + geometryZip
 demo2GeometryZipPath = demo2Dir + geometryZip
 
-if not os.path.isdir(demo1Dir + geometryDir) and not os.path.isfile(demo1Dir + geometryMeta):
-    demo1Zip = zipfile.ZipFile(demo1GeometryZipPath, 'r')
-    demo1Zip.extractall(demo1Dir)
-    demo1Zip.close()
-else:
-    print('Demo 1 Geometry Data already exists. We recommend remove folder and retry.')
+if args.interactive:
+    if not os.path.isdir(demo1Dir + geometryDir) and not os.path.isfile(demo1Dir + geometryMeta):
+        print('Unzipping Interactive geometry data')
+        demo1Zip = zipfile.ZipFile(demo1GeometryZipPath, 'r')
+        demo1Zip.extractall(demo1Dir)
+        demo1Zip.close()
+    else:
+        print('Demo 1 Geometry Data already exists. If prefab errors occur, remove folder and meta files, then retry.')
 
-if not os.path.isdir(demo2Dir + geometryDir) and not os.path.isfile(demo2Dir + geometryMeta):
-    demo2Zip = zipfile.ZipFile(demo2GeometryZipPath, 'r')
-    demo2Zip.extractall(demo2Dir)
-    demo2Zip.close()
-else:
-    print('Demo 2 Geometry Data already exists. We recommend remove folder and retry.')
+if args.vcm:
+    if not os.path.isdir(demo2Dir + geometryDir) and not os.path.isfile(demo2Dir + geometryMeta):
+        print('Unzipping Virtual Confocal Microscopy geometry data')
+        demo2Zip = zipfile.ZipFile(demo2GeometryZipPath, 'r')
+        demo2Zip.extractall(demo2Dir)
+        demo2Zip.close()
+    else:
+        print('Demo 2 Geometry Data already exists. If prefab errors occur, remove folder and meta files, then retry.')
 
 
 # Open Unity
-#pid = os.fork()
-#if pid > 0:
-#    sys.exit()
-#else:
-subprocess.call('C:/Program Files/Unity/Editor/Unity.exe')
+#subprocess.call('C:/Program Files/Unity/Editor/Unity.exe')
 
 print('Setup Complete')
