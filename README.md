@@ -18,12 +18,16 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
    Here we provide a simple example of viewing pre-computed data from a simulation in VR. By converting our simulation data into a 3D simplicial complex, and integrating Leap Motion technology, one can grab hold of their data with their own hands. They can translate, rotate, and scale their data mesh using the unconstrained, intuitive movement of their own hands. Think Minority Report.
 
 <p align="center">
-   <img src="./images/InteractiveViewer.png" width=50%/>
+   <img src="./UnityGEARS/images/InteractiveViewer.png" width=50%/>
 </p>
 
 2. Virtual Confocal Microscopy
 
    While visualizing data in VR alone does provide a more immersive viewing experience, it does not necessarily tap into the unique tools only accessible in VR. To display the powerful immersiveness that VR provides, we developed a graphics shader based confocal microscopy system that allows users to scan through different viewing planes of large complex structures. Users can isolate sequestered regions in their data using head movement alone, a feature only possible with VR.
+
+<div align="center">
+     <img src="./UnityGEARS/images/VCMIllustrationOn.png" width=50%/> <img src="./UnityGEARS/images/VCMIllustrationOff.png" width=50%/>
+<\div>
    
 3. Real-time Simulator in Virtual Reality
 
