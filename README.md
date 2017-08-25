@@ -17,7 +17,9 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
 
    Here we provide a simple example of viewing pre-computed data from a simulation in VR. By converting our simulation data into a 3D simplicial complex, and integrating Leap Motion technology, one can grab hold of their data with their own hands. They can translate, rotate, and scale their data mesh using the unconstrained, intuitive movement of their own hands. Think Minority Report.
 
-![]<https://github.com/USCCACS/GEARS/tree/master/images/InteractiveViewer.png>
+<p align="center">
+   <img src="./images/InteractiveViewer.png"/>
+</p>
 
 2. Virtual Confocal Microscopy
 
