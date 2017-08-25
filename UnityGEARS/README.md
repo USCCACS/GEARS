@@ -9,9 +9,11 @@
   * *Note: Respective runtimes and supporting software for the HMDs are also required*
 * For Interactive Demos: [Leap Motion](https://www.leapmotion.com/) attached to front of HMD
 
-## Installation/Setup
+## Installation
+The default installation only includes two of the four demos available. The two non-default demos are the Interactive Viewer and the Virtual Confocal Microscopy. Although these demos provide considerable insight on the strengths of Unity GEARS in VR, they utilize large object files to represent our data meshes. Therefore their installation steps may take extra time depending on the speed of your computer. If one chooses not to include them in their installation, then the large object files will simply be left in their respective .zip files.
 
-From the Windows command prompt run:
+### Setup via Python
+Make sure Python 2 is installed on your Windows 10 machine. From the Windows command prompt run:
 ```
 python.exe setup.py
 ```
@@ -19,8 +21,14 @@ If you wish to install the interactive and virtual confocal microscopy demos, in
 ```
 python.exe setup.py --interactive --vcm
 ```
-
-The interactive viewing and virtual confocal microscopy demos use considerable large object files to represent our data meshes, therefore their installation steps may take extra time depending on the speed of your computer.
+### Manual Setup
+If you wish to install the interactive and virtual confocal microscopy demos, unzip the following folders:
+```
+GEARS\UnityGEARS\Editor\Assets\Demo1-DataViewer\GeometryData.zip
+GEARS\UnityGEARS\Editor\Assets\Demo2-VirtualConfocalMicroscopy\GeometryData.zip
+GEARS\UnityGEARS\Editor\Assets\Leap_Motion_CoreAssets_4.2.1.zip
+```
+Open up Unity.exe. Fill out any necessary login credentials. Select "Open" project. Navigate to the GEARS/UnrealGEARS/Editor/ directory and select it. Unity will the generate all the necessary project files.
 
 ## How to use
  Press the play button on the top of the screen. Switch between demos using the number pad.
