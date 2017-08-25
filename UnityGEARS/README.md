@@ -28,15 +28,17 @@ GEARS\UnityGEARS\Editor\Assets\Demo1-DataViewer\GeometryData.zip
 GEARS\UnityGEARS\Editor\Assets\Demo2-VirtualConfocalMicroscopy\GeometryData.zip
 GEARS\UnityGEARS\Editor\Assets\Leap_Motion_CoreAssets_4.2.1.zip
 ```
-Open up Unity.exe. Fill out any necessary login credentials. Select "Open" project. Navigate to the GEARS/UnrealGEARS/Editor/ directory and select it. Unity will the generate all the necessary project files.
+Open up Unity.exe. Fill out any necessary login credentials. Select "Open" project. Navigate to the GEARS\UnrealGEARS\Editor\ directory and select it. Unity will the generate all the necessary project files.
 
 ## How to use
  Press the play button on the top of the screen. Switch between demos using the number pad.
- 0. Empty Environment
- 1. Demo1 - Interactive Viewer with Leap Motion control
- 2. Demo2 - Virtual Confocal Microscopy with Leap Motion Control
- 3. Demo3a - Lennard Jones Molecular Dynamics Simulation in real time
- 4. Demo3b - Kinetic Monte Carlo simulation of electron transfer in cytochrome proteins (also real time)
+<ol start="0">
+ <li> Empty Environment </li>
+ <li> Demo1 - Interactive Viewer with Leap Motion control </li>
+ <li> Demo2 - Virtual Confocal Microscopy with Leap Motion Control </li>
+ <li> Demo3a - Lennard Jones Molecular Dynamics Simulation in real time </li>
+ <li> Demo3b - Kinetic Monte Carlo simulation of electron transfer in cytochrome proteins (also real time) </li>
+</ol>
 
 ## Demo Descriptions
 ### Demo 1 - Interactive Data Viewer for Post-Processing
