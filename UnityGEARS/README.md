@@ -1,13 +1,13 @@
 # GEARS in Unity 5
 
 ## System Requirements
-* Windows 10
-* [Unity Engine](https://unity3d.com/) (Recommended Version: 5.6.1f1)
+* [Windows 10 OS](https://www.microsoft.com/en-us/windows/) (64-bit Version Recommended)
+* [Unity Engine](https://unity3d.com/) (Version 5.6.1f1 Recommended)
 * Virtual Reality Head Mounted Display (only need one)
   1. [HTC Vive](https://www.vive.com/)
   2. [Oculus Rift](https://www.oculus.com/)
   * *Note: Respective runtimes and supporting software for the HMDs are also required*
-* For Interactive Demos: [Leap Motion](https://www.leapmotion.com/)
+* For Interactive Demos: [Leap Motion](https://www.leapmotion.com/) attached to front of HMD
 
 ## Installation/Setup
 
@@ -24,11 +24,11 @@ The interactive viewing and virtual confocal microscopy demos use considerable l
 
 ## How to use
  Press the play button on the top of the screen. Switch between demos using the number pad.
-       0. Empty Environment
-       1. Demo1 - Interactive Viewer with Leap Motion control
-       2. Demo2 - Virtual Confocal Microscopy with Leap Motion Control
-       3. Demo3a - Lennard Jones Molecular Dynamics Simulation in real time
-       4. Demo3b - Kinetic Monte Carlo simulation of electron transfer in cytochrome proteins (also real time)
+ 0. Empty Environment
+ 1. Demo1 - Interactive Viewer with Leap Motion control
+ 2. Demo2 - Virtual Confocal Microscopy with Leap Motion Control
+ 3. Demo3a - Lennard Jones Molecular Dynamics Simulation in real time
+ 4. Demo3b - Kinetic Monte Carlo simulation of electron transfer in cytochrome proteins (also real time)
 
 ## Demo Descriptions
 ### Demo 1 - Interactive Data Viewer for Post-Processing
