@@ -26,7 +26,7 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
    While visualizing data in VR alone does provide a more immersive viewing experience, it does not necessarily tap into the unique tools only accessible in VR. To display the powerful immersiveness that VR provides, we developed a graphics shader based confocal microscopy system that allows users to scan through different viewing planes of large complex structures. Users can isolate sequestered regions in their data using head movement alone, a feature only possible with VR.
 
 <div align="center">
-     <img src="./UnityGEARS/images/VCMIllustrationOn.png" width=40% float="left"/> <img src="./UnityGEARS/images/VCMIllustrationOff.png" width=40%/>
+     <img src="./UnityGEARS/images/VCMIllustrationOff.png" width=40% float="left"/> <img src="./UnityGEARS/images/VCMIllustrationOn.png" width=40%/>
 </div><br>
 
 3. Real-time Simulator in Virtual Reality
