@@ -1,7 +1,7 @@
 # Game-Engine Assisted Research framework for Scientific computing (GEARS) in Virtual Reality
 
 <div align="center">
-  <img src="https://magics.usc.edu/wp-content/uploads/2017/06/GEARS-Logo2.jpg"><br><br>
+  <img src="https://magics.usc.edu/wp-content/uploads/2017/06/GEARS-Logo2.jpg" width=60%><br><br>
 </div>
 
 -----------------
