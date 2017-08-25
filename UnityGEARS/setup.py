@@ -61,6 +61,6 @@ if args.vcm:
 
 # Open Unity
 
-subprocess.call(['C:/Program Files/Unity/Editor/Unity.exe', 'batchmode', '-quit', '-projectPath', fullProjectPath])
+subprocess.call(['C:/Program Files/Unity/Editor/Unity.exe', '-projectPath', fullProjectPath])
 
 print('Setup Complete')
