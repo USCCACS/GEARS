@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using Leap.Unity;
 
 
 public class MolecularDynamics : MonoBehaviour

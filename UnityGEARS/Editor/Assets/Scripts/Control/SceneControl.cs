@@ -7,7 +7,7 @@ public class SceneControl : MonoBehaviour {
 
     public static string defaultScene = "ClickMe";
     public List<string> sceneNames = new List<string>(new string[]
-    {defaultScene, "Interactive Viewer", "VFC", "LennardJones", "KineticMonteCarlo"});
+    {defaultScene, "Interactive Viewer", "VFC", "LennardJonesMD", "KineticMonteCarlo"});
     private List<string> scenesInBuild;
 
 

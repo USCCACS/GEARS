@@ -7,6 +7,9 @@ import os.path
 import subprocess
 import sys
 
+#Acquire the current working directory
+currentDir = os.path.dirname(os.path.realpath(__file__))
+
 # Parse Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--interactive", help="Adds Interactive Data Viewer demo to the build", action="store_true")
@@ -14,16 +17,28 @@ parser.add_argument("--vcm", help="Adds the Virtual Confocal Microscopy demo to 
 
 args = parser.parse_args();
 
-# Unzip Geometry Data Files
-assetsPath = './Editor/Assets/'
+# Unzip LeapMotion and Geometry Data Files
+projectDir = './Editor/'
+fullProjectPath = currentDir + projectDir
+assetsPath = projectDir + 'Assets/'
+
 geometryDir = 'GeometryData/'
 geometryMeta = 'GeometryData.meta'
 geometryZip = 'GeometryData.zip'
 
+leapZipPath =  assetsPath + 'Leap_Motion_CoreAssets_4.2.1.zip'
+leapDir = assetsPath + 'LeapMotion/'
+leapMeta = assetsPath + 'LeapMotion.meta'
 demo1Dir = assetsPath + 'Demo1-DataViewer/'
 demo2Dir = assetsPath + 'Demo2-VirtualConfocalMicroscopy/'
 demo1GeometryZipPath = demo1Dir + geometryZip
 demo2GeometryZipPath = demo2Dir + geometryZip
+
+if not os.path.isdir(leapDir) and not os.path.isfile(leapMeta):
+	print('Unzipping Leap Motion Package')
+	leapZip = zipfile.ZipFile(leapZipPath, 'r')
+	leapZip.extractall(assetsPath)
+	leapZip.close()
 
 if args.interactive:
     if not os.path.isdir(demo1Dir + geometryDir) and not os.path.isfile(demo1Dir + geometryMeta):
@@ -45,6 +60,7 @@ if args.vcm:
 
 
 # Open Unity
-#subprocess.call('C:/Program Files/Unity/Editor/Unity.exe')
+
+subprocess.call(['C:/Program Files/Unity/Editor/Unity.exe', 'batchmode', '-quit', '-projectPath', fullProjectPath])
 
 print('Setup Complete')
