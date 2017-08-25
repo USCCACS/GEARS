@@ -14,11 +14,16 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
 ## Unity GEARS
 ### Sample Use Cases
 1. VR Post-process Data Viewing Interface
+
    Here we provide a simple example of viewing pre-computed data from a simulation in VR. By converting our simulation data into a 3D simplicial complex, and integrating Leap Motion technology, one can grab hold of their data with their own hands. They can translate, rotate, and scale their data mesh using the unconstrained, intuitive movement of their own hands. Think Minority Report.
    
 2. Virtual Confocal Microscopy
-   Simply viewing data in VR alone 
+
+   While visualizing data in VR alone does provide a more immersive viewing experience, it does not necessarily tap into the unique tools only accessible in VR. To display the powerful immersiveness that VR provides, we developed a graphics shader based confocal microscopy system that allows users to scan through different viewing planes of large complex structures. Users can isolate sequestered regions in their data using head movement alone, a feature only possible with VR.
+   
 3. Real-time Simulator in Virtual Reality
+
+   This demo consists of two parts, both hilighting the engines' capabilities of not only viewing pre-computed data, but actually running simulations in real time. By translating existing code into the native language of Unity, C#, we provide the user real-time examples of a kinetic Monte Carlo and molecular dynamics based simulations. 
 
 ## Unreal GEARS
 ### Sample Use Cases (include blurbs on each)
