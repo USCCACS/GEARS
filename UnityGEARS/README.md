@@ -1,5 +1,9 @@
 # GEARS in Unity 5
 
+<div align="center">
+     <img src="./images/InteractiveViewer.png"/> 
+</div><br>
+
 ## System Requirements
 * [Windows 10 OS](https://www.microsoft.com/en-us/windows/) (64-bit Version Recommended)
 * [Unity Engine](https://unity3d.com/) (Version 5.6.1f1 Recommended)
