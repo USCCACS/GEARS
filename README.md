@@ -27,8 +27,8 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
 
 <div align="center">
      <img src="./UnityGEARS/images/VCMIllustrationOn.png" width=40% float="left"/> <img src="./UnityGEARS/images/VCMIllustrationOff.png" width=40%/>
-</div>
-   
+</div><br>
+
 3. Real-time Simulator in Virtual Reality
 
    This demo consists of two parts, both hilighting the engines' capabilities of not only viewing pre-computed data, but actually running simulations in real time. By translating existing code into the native language of Unity, C#, we provide the user real-time examples of a kinetic Monte Carlo and molecular dynamics based simulations. 
