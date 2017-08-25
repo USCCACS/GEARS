@@ -31,12 +31,29 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
 
 3. Real-time Simulator in Virtual Reality
 
-   This demo consists of two parts, both hilighting the engines' capabilities of not only viewing pre-computed data, but actually running simulations in real time. By translating existing code into the native language of Unity, C#, we provide the user real-time examples of a kinetic Monte Carlo and molecular dynamics based simulations. 
+   This demo consists of two parts, both hilighting the engines' capabilities of not only viewing precomputed data, but actually running simulations in real time. By translating existing code into the native language of Unity, C#, we provide the user real-time examples of a kinetic Monte Carlo and molecular dynamics based simulations. 
+
+<div align="center">
+     Insert image of KMC or Lennard Jones
+</div><br>
 
 ## Unreal GEARS
 ### Sample Use Cases (include blurbs on each)
 1. LAMMPS Integrated Simulator
+
+   Using GEARS in Unreal Engine 4.16, we took our real-time simulation method one step further and integrated a pre-existing molecular dynamics library. Now, instead of translating simulation code to the native language of the engines, one can simply reuse their existing script and port it directly into the engine. By using the LAMMPS library, any simulation that uses a LAMMPS script can be run and visualized in real-time in our demo of GEARS in Unreal.
+
+<div align="center">
+     <img src="./UnrealGEARS/images/RealTimeSim1.png" width=60%/>
+</div><br>
+
 2. LAMMPS Integrated Playback Engine
+
+   Because the LAMMPS library can also reconstruct simulation data via LAMMPS "DUMP" files, one can also use this integrated simulator to visualize a playback of any precomputed multi-scale simulation. We demo this by recreating a 100,000 particle simulation via LAMMPS, which one can view through their VR HMD. Using a set of motion controllers (from either Oculus or HTC), one can maneuver through the particles, viewing the giant structure from any angle they desire.
+
+<div align="center">
+     <img src="./UnrealGEARS/images/PlaybackSim1.png" width=60%/>
+</div><br>
 
 ## License
 
