@@ -33,24 +33,9 @@ function OnTriggerExit (col : Collider) {
 }
 
 function Start() {
-    //viewingWidth = 10;
+
 }
 
 function Update() {
-    if (Input.GetKey(KeyCode.Space)) {
-        started = !started;
-        Debug.Log("You pressed Space");
-    }
 
-    if (viewingWidth > 0.15 && started == true) {
-        viewingWidth -= 2*Time.deltaTime;
-        if (viewingWidth < 0.15)
-            viewingWidth = 0.15;
-        Debug.Log("Decreasing viewing width");
-    } else if (viewingWidth < 10 && started == false) {
-        viewingWidth += 2*Time.deltaTime;
-        if (viewingWidth > 10)
-            viewingWidth = 10;
-        Debug.Log("Increasing viewing width");
-    }
 }

@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/**************************************************************
+ * Disclaimer: This code is terribly written and commented. 
+ * I apologize for the poor choice of variable and function names. 
+ **************************************************************/
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Threading;
@@ -35,12 +40,18 @@ public class Protein : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Update thye position of the protein
+		//Update the position of the protein
 		center = Vector3.zero;
 		for (int i=0; i<my_babies.Count; ++i) {
 			center += my_babies[i].transform.position;
 		}
 		center /= my_babies.Count;
+
+        // Update the slider value if someone pressed an arrow key
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            slider.value -= 0.1f;
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+            slider.value += 0.1f;
 
 		//Calculate the rendering speed
 		double adjustment = Mathf.Pow(10, slider.value) * frameDuration;

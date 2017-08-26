@@ -12,23 +12,23 @@ public class ObjectTriggerPinch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (pinch_left.IsHolding || pinch_right.IsHolding)
-        {
-            viewingWidth = 10000.0f;
-        } else
-        {
-            viewingWidth = 0.05f;
+        if (pinch_left.DidStartPinch || pinch_right.DidStartPinch)
+        { 
+            viewingWidth = vcmOn ? planeThicknessOff : planeThicknessOn;
+            vcmOn = !vcmOn;
         }
 	}
 
     public PinchDetector pinch_left;
     public PinchDetector pinch_right;
-    float viewingWidth = 0.05f;
+    public static float planeThicknessOn = 0.05f;
+    public static float planeThicknessOff = 100000f;
+    private bool vcmOn = true;
+    float viewingWidth = planeThicknessOn;
     bool started = false;
 
     public void OnTriggerStay(Collider col)
     {
-        //Debug.Log("Trigger Stay", gameObject);
         Vector3 normal;
         Vector3 position;
         float distance;
@@ -36,10 +36,6 @@ public class ObjectTriggerPinch : MonoBehaviour {
         normal = col.gameObject.transform.up;
         position = col.gameObject.transform.position;
         distance = col.gameObject.GetComponent<BoxCollider>().bounds.extents.y;
-
-        //Debug.Log("Collider Distance: " + distance);
-
-
 
         GetComponent<Renderer>().sharedMaterial.SetVector("_Normal", normal);
         GetComponent<Renderer>().sharedMaterial.SetVector("_PlanePosition", position);
@@ -49,12 +45,9 @@ public class ObjectTriggerPinch : MonoBehaviour {
 
     public void OnTriggerExit(Collider col)
     {
-        //Debug.Log("Trigger Exit", gameObject);
-
-        GetComponent<Renderer>().sharedMaterial.SetVector("_Normal", new Vector4(0f, 0f, 0f, 0f));
+        GetComponent<Renderer>().sharedMaterial.SetVector("_Normal", new Vector4(1f, 1f, 1f, 1f));
         GetComponent<Renderer>().sharedMaterial.SetVector("_PlanePosition", new Vector4(0f, 0f, 0f, 0f));
-        GetComponent<Renderer>().sharedMaterial.SetFloat("_Distance", 0.0f);
-
+        GetComponent<Renderer>().sharedMaterial.SetFloat("_Distance", vcmOn ? 0.0f : planeThicknessOff);
     }
 
 }
