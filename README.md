@@ -40,7 +40,7 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
 </div><br>
 
 ## Unreal GEARS
-### Sample Use Cases (include blurbs on each)
+### Sample Use Cases
 1. LAMMPS Integrated Simulator
 
    Using GEARS in Unreal Engine 4.16, we took our real-time simulation method one step further and integrated a pre-existing molecular dynamics library. Now, instead of translating simulation code to the native language of the engines, one can simply reuse their existing script and port it directly into the engine. By using the LAMMPS library, any simulation that uses a LAMMPS script can be run and visualized in real-time in our demo of GEARS in Unreal.
