@@ -82,7 +82,7 @@ A. Molecular Dynamics (MD)
 B. Kinetic Monte Carlo
       This demo consists of a system of 20 heme sites on a cytochrome protein undergoing electron transfer. The code was translated to C# from Hye Suk Byun's simulation from [insert citation]. This particular simulation utilizes our Render-when-Ready method where we offload the time step calculation onto a separate thread. The game thread then continues, only updating the heme occupation states when user-dictated time has passed. The speed at which the position updates occur is controlled by the slider floating in front of the protein. The user can slow down and speed up the simulation using the left and right arrow keys. When the slider is all the way on the left, the simulation is paused.
 
-## Customization
+# Customization
 What good are our demos gonna do for your research? If you really want to have fun with GEARS, you gotta adapt it to your own schtuff. Here's how you can drag and customize the simulation data.
 I'll be refering to several "windows" within the Unity editor in this section. If you are unfamiliar with the nomenclature, then we suggest reading through [this section](https://docs.unity3d.com/Manual/UsingTheEditor.html) in the Unity manual first.
 
