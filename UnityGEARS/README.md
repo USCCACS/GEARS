@@ -69,10 +69,9 @@ python.exe setup.py --interactive --vcm
 
   The previous demo is intended to embolden researchers to adapt existing scientific programs for use in VR, but, for our purposes, it is not enough to simply provide interoperability. To fully realize the promise of immersive scientific computing, we need to develop new tools to enhance these simulations and visualizations. Current data visualization tools, like VMD and ParaView, limit researchers to interaction via the mouse and keyboard; however, with rich programming options, visual scripting capabilities, and an abundance of pre-integrated control schemes, GEARS yields opportunities for immersive, interactive data analysis. An example of one of these tools is our ongoing development of a rendering method called *virtual confocal microscopy*. This method mimics the noninvasive optical sectioning possible in confocal microscopy. Utilizing Unity’s surface shader capabilities, we control how each vertex on the structure is rendered to highlight certain areas or planes of the material in the simulation. Our solution seeks to generate a viewing plane that sits in front of the user’s head, follows their head movement, and always maintains a set distance from the user. This distance, as well as the thickness of the highlighted viewing plane can be specified and changed  by the user, however, for simplicity, this demo excludes the viewing thickness to two modes: on or off. 
 
-  Controls:
-  
-    * Toggle the confocal plane on and off by pinching your index fingers and thumb together then releasing.
-    * When the confocal plane is turned on, you should only see a slice out of the data object. Every other part should be transparent. Move the confocal plane through the structure by using your head movements. Don't be afraid to take a few steps backward or forward to scan through the entire data set.
+  Controls:  
+  * Toggle the confocal plane on and off by pinching your index fingers and thumb together then releasing.
+  * When the confocal plane is turned on, you should only see a slice out of the data object. Every other part should be transparent. Move the confocal plane through the structure by using your head movements. Don't be afraid to take a few steps backward or forward to scan through the entire data set.
     
 ### Demo 3 - Real Time Simulator
   To enhance the dynamic aspects of GEARS, in these demos we go beyond recreations of previously computed results to generate immersive and interactive VR simulations. These simulations run in real time on the engine, allowing the user to put on their head set and jump right in. Although simulations follow many different paradigms, we provide examples in molecular dynamics and kinetic Monte Carlo, both of which can utilize our methodologies for real time simulation rendering in VR: Run-and-Render and Render-when-Ready (discussed further in our publication tbd).
@@ -82,7 +81,7 @@ A. Molecular Dynamics (MD)
 B. Kinetic Monte Carlo
       This demo consists of a system of 20 heme sites on a cytochrome protein undergoing electron transfer. The code was translated to C# from Hye Suk Byun's simulation from [insert citation]. This particular simulation utilizes our Render-when-Ready method where we offload the time step calculation onto a separate thread. The game thread then continues, only updating the heme occupation states when user-dictated time has passed. The speed at which the position updates occur is controlled by the slider floating in front of the protein. The user can slow down and speed up the simulation using the left and right arrow keys. When the slider is all the way on the left, the simulation is paused.
 
-# Customization
+## Customization
 What good are our demos gonna do for your research? If you really want to have fun with GEARS, you gotta adapt it to your own schtuff. Here's how you can drag and customize the simulation data.
 I'll be refering to several "windows" within the Unity editor in this section. If you are unfamiliar with the nomenclature, then we suggest reading through [this section](https://docs.unity3d.com/Manual/UsingTheEditor.html) in the Unity manual first.
 
@@ -99,12 +98,9 @@ I'll be refering to several "windows" within the Unity editor in this section. I
 #### Leap Motion Controls
   Doing the above steps will get your data into the scene and ready to view in VR. However, if you would like to have some control over your data while you're viewing it, a control scheme will be necessary. Unity supports many types of controllers and [input methods](https://docs.unity3d.com/Manual/class-InputManager.html), however, for our demos we chose to use the Leap Motion for its gesture control library and well supported [prefabs](https://docs.unity3d.com/Manual/Prefabs.html) which can be brought into Unity scenes without any extra programming. Assuming the Leap Motion library folder was properly unzipped during the installation step described above, one can implement Leap Motion controls into our project template as follows:
   
-1 Replace the camera
-
-  <li> New PinchDetectors, attach script </li>
-  <li> Attach LeapRTS </li>
-  <li> etc. </li>
-</ol>
+1. Replace the camera
+2. Create Pinch Detectors
+3. Attach LeapRTS.cs to data object
 
 ### Demo 3a and 3b
 Here's how you start simulating and visualizing things in the engine. For more detail oon that, refer to our publication.
