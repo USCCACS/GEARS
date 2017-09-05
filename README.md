@@ -59,4 +59,6 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
 
 ## License
 
+This project is licensed under the GPU 3.0 license - see the [LICENSE.md](LICENSE.md) file for details
+
 ## How to cite
