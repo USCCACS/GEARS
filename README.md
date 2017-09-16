@@ -57,6 +57,21 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
      <img src="./UnrealGEARS/images/PlaybackSim1.png" width=60%/>
 </div><br>
 
+## Requested Features
+1. *Data Feedback Support*
+   In our real time simulations in Unreal GEARS, LAMMPS is essentially doing all the work aside from rendering. Right now, the only data we extract from LAMMPS are the particle positions and types. However, LAMMPS is capable of supplying much more, including system temperature, energy, etc. Having a live feedback of these simulation properties for the user would be incredibly benefical for GEARS as a visualization tool.
+2. *Multi-User Support*
+   As of right now, Unity and Unreal GEARS only support single user immersion into a simulation or data viewing session. It would be great to have multiple users be able to wear a head set and observe the same GEARS session. A researcher in Los Angeles and another in New York could theoretically observe the same simulation in real time, providing simultaneous input and analysis of the results.
+3. *More Development for the Interactive Simulation*
+   Although we've demo'd the ability to speed up, slow down, and pause a real time simulations in Unity and Unreal GEARS, further interactive support would also e incredibly beneficial to the utility of GEARS. Allowing a user to pause the simulation, take hold of one or more particles, and move or insert them elsewhere would make GEARS an even more powerful experimental visualization tool.
+4. *Visible Bonds in Unreal GEARS with LAMMPS*
+   There is no mechanism for calculating and visualizing where bonds occur between particles in the Unreal LAMMPS simulations.
+	    
+## Known Issues
+* Making illegal/invalid LAMMPS calls in the LAMMPS input script will cause the engine to freeze
+* OpenMP support in the LAMMPS input script only works when utilizing all the cores available on the machine. Only utilizing a fraction of the cores has been shown to cause the engine to crash.
+* The billboards in Unreal GEARS rotate about the bottom center of the square. It would be better for them to rotate about the actual center of the billboard. This issue is more noticable when many particles are in close proximity.
+
 ## License
 
 This project is licensed under the GPU 3.0 license - see the [LICENSE.md](LICENSE.md) file for details
