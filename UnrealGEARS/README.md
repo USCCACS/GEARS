@@ -1,25 +1,21 @@
 # GEARS in Unreal Engine 4.16
 
 ## System Requirements
-* Windows 10
-* Unreal Engine 4.16
-* VR Head Mounted Display (HMD)
-  1. If using HTC Vive, Steam and SteamVR is required
-  2. If using Oculus Rift, Oculus Runtime is required
-* Game Controller with Directional Pad
-  * Tested Controllers: XBox 360 Controller, XBox One Controller, and Oculus Remote
-* Visual Studio Community 2017
+* [Windows 10 OS](https://www.microsoft.com/en-us/windows/) (64-bit Version Recommended)
+* [Unreal Engine 4.16](https://www.unrealengine.com/en-US/what-is-unreal-engine-4)
+* Virtual Reality Head Mounted Display (only need one)
+  1. [HTC Vive](https://www.vive.com/)
+  2. [Oculus Rift](https://www.oculus.com/)
+  * *Note: Respective runtimes and supporting software for the HMDs are also required*
+* For Interaction: HTC Vive Controllers or Oculus Touch
 
 ## Installation
 1. Install the Epic Games Launcher and Unreal Engine 4 from the [Epic Games](https://www.unrealengine.com/what-is-unreal-engine-4) website. The current project was developed in version 4.16.
-2. For VR mode, install one of the HMDs runtimes.
+2. For VR mode, install one of the HMDs runtimes:
   * [Oculus Rift](https://www3.oculus.com/en-us/setup/)
   * [HTC Vive](https://www.vive.com/us/setup/)
 3. Generate Visual Studio files by right clicking the Unreal project file (LammpsVR.uproject) in the LammpsEditor directory.
   If your computer does not associate .uproject files with the Unreal Editor, then you may have to open up the .uproject file via the Epic Games Launcher first. 
-
-## System/Installation Check
-//TODO
 
 ## How to use LammpsVR Editor
 1. Real-time Simulation Mode

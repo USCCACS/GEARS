@@ -82,14 +82,14 @@ B. Kinetic Monte Carlo
       This demo consists of a system of 20 heme sites on a cytochrome protein undergoing electron transfer. The code was translated to C# from Hye Suk Byun's simulation from [insert citation]. This particular simulation utilizes our Render-when-Ready method where we offload the time step calculation onto a separate thread. The game thread then continues, only updating the heme occupation states when user-dictated time has passed. The speed at which the position updates occur is controlled by the slider floating in front of the protein. The user can slow down and speed up the simulation using the left and right arrow keys. When the slider is all the way on the left, the simulation is paused.
 
 ## Customization
-What good are our demos gonna do for your research? If you really want to have fun with GEARS, you gotta adapt it to your own schtuff. Here's how you can drag and customize the simulation data.
+What good are our demos gonna do for your research? If you really want to have fun with GEARS, you need to adapt it to your own stuff. Here's how you can drag and customize the simulation data.
 I'll be refering to several "windows" within the Unity editor in this section. If you are unfamiliar with the nomenclature, then we suggest reading through [this section](https://docs.unity3d.com/Manual/UsingTheEditor.html) in the Unity manual first.
 
 ### Demo 1
 
 #### Getting your data into a Unity scene
 1. Mesh-ify your data
-    Turning your data into a 3D mesh is how we're going to get Unity to recognize it. Unity supports several [3D formats](https://docs.unity3d.com/Manual/class-Mesh.html), but for our demo we only use obj files. We ran an MD simulation on an HPCC, then output the atom coordinates in a single frame to an .xyz file. This .xyz file was loaded into [Visual Molecular Dynamics (VMD)](http://www.ks.uiuc.edu/Research/vmd/), then rendered into the Wavefront format (.obj and .mtl). Once rendered, we imported the wavefront file by simply dragging and dropping it into the Unity editor [Project window](https://docs.unity3d.com/Manual/ProjectView.html) from the File Explorer.
+    In order for Unity to recognize your simulations data, you'll need to turn it into a 3D mesh. Unity supports several [3D formats](https://docs.unity3d.com/Manual/class-Mesh.html), but for our demo we only use obj files. We ran an MD simulation on an HPCC, then output the particle coordinates from a single frame to an .xyz file. This .xyz file was loaded into [Visual Molecular Dynamics (VMD)](http://www.ks.uiuc.edu/Research/vmd/), and then rendered into the Wavefront format (.obj and .mtl). Once rendered, we imported the wavefront file by simply dragging and dropping it into the Unity editor [Project window](https://docs.unity3d.com/Manual/ProjectView.html) from the File Explorer.
     
 2. Create a new Unity [scene](https://docs.unity3d.com/Manual/CreatingScenes.html) or work off of ours (located in "\Editor\Assets\Demo1-DataViewer\InteractiveViewer.unity")
 3. Drag & Drop your data .obj file into the scene from the Project window to the [Hierarchy window](https://docs.unity3d.com/Manual/Hierarchy.html).
@@ -98,11 +98,22 @@ I'll be refering to several "windows" within the Unity editor in this section. I
 #### Leap Motion Controls
   Doing the above steps will get your data into the scene and ready to view in VR. However, if you would like to have some control over your data while you're viewing it, a control scheme will be necessary. Unity supports many types of controllers and [input methods](https://docs.unity3d.com/Manual/class-InputManager.html), however, for our demos we chose to use the Leap Motion for its gesture control library and well supported [prefabs](https://docs.unity3d.com/Manual/Prefabs.html) which can be brought into Unity scenes without any extra programming. Assuming the Leap Motion library folder was properly unzipped during the installation step described above, one can implement Leap Motion controls into our project template as follows:
   
+  As stated earlier, Unity will automatically display the in-game camera’s output to the user’s HMD when VR support is enabled. To use the Leap Motion controller, though, the in-game camera must be replaced with the prefab provided with Leap Motion library, [LMHeadMountedRig](https://developer-archive.leapmotion.com/documentation/v2/unity/unity/Unity.Prefab.LMHeadMountedRig.html). This prefab contains a replacement camera as well as game objects and scripts to handle processing input from the controller. To acquire this prefab, we first downloaded the Unity Core Assets 4.2.1 from the company’s [developer website](https://developer.leapmotion.com/unity#116). Other versions of the Unity Core Assets may be available, but these have not been tested with provided demo and may or may not be compatible with them. The Leap Motion controller was mounted to the front of our VR HMD. The company provides a mounting kit for this purpose. 
+  
+  The LMHeadMountedRig generates a set of virtual hands that appear in the engine editor and game. From there, the user is free to program the controls how they see fit using the Detection Utilities found in the Unity Core Assets 4.2.1 library. For our demo we also use the Detection Examples 1.0.4 package, provided by Leap Motion, to allow for simple interaction with our precomputed simulation data. Specifically, we make use of the LeapRTS.cs script to allow us to grab, rotate, and scale our simulation data.
+  
+  To utilize the LeapRTS.cs script, pinch detectors must be placed in the scene. This can be done by attaching the PinchDetector.cs scripts to the empty child GameObjects of CapsuleHand_L and CapsuleHand_R. In the Inspector windows, drag the appropriate CapsuleHand to its corresponding PinchDetector’s “Hand Model” variable. When the simulation data has been converted into an object file and dragged into the scene Hierarchy, attach the LeapRTS.cs script to that object. Assign the appropriate left and right pinch detectors created earlier to LeapRTS.cs’s PinchDetector A and B fields.
+
+  **insert figures**
+
+  Once setup, the user should be able to grab and manipulate their simulation data in VR. It should be noted that the Detection Examples 1.0.4 package has been deprecated by the company at the time of this publication. Leap Motion offers a new Interaction library to replace it. This is an excellent example of how quickly these technologies are developing and evolving, providing a rich and ever expanding plethora of software and hardware tools for use with data visualizaiton. The LeapRTS.cs script is provided with the demo files.
+
 1. Replace the camera
+
 2. Create Pinch Detectors
 3. Attach LeapRTS.cs to data object
 
 ### Demo 3a and 3b
-Here's how you start simulating and visualizing things in the engine. For more detail oon that, refer to our publication.
+Here's how you start simulating and visualizing things in the engine. For more detail on that, refer to our publication.
 1. Run and Render
 2. Render When Ready
