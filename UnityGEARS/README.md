@@ -104,14 +104,11 @@ I'll be refering to several "windows" within the Unity editor in this section. I
   
   To utilize the LeapRTS.cs script, pinch detectors must be placed in the scene. This can be done by attaching the PinchDetector.cs scripts to the empty child GameObjects of CapsuleHand_L and CapsuleHand_R. In the Inspector windows, drag the appropriate CapsuleHand to its corresponding PinchDetector’s “Hand Model” variable. When the simulation data has been converted into an object file and dragged into the scene Hierarchy, attach the LeapRTS.cs script to that object. Assign the appropriate left and right pinch detectors created earlier to LeapRTS.cs’s PinchDetector A and B fields.
 
-  **insert figures**
+  <div align="center">
+     <img src="./images/LeapControls.png"/> 
+  </div><br>
 
-  Once setup, the user should be able to grab and manipulate their simulation data in VR. It should be noted that the Detection Examples 1.0.4 package has been deprecated by the company at the time of this publication. Leap Motion offers a new Interaction library to replace it. This is an excellent example of how quickly these technologies are developing and evolving, providing a rich and ever expanding plethora of software and hardware tools for use with data visualizaiton. The LeapRTS.cs script is provided with the demo files.
-
-1. Replace the camera
-
-2. Create Pinch Detectors
-3. Attach LeapRTS.cs to data object
+  Above is an example of what the Hierarchy window should look like when the LMHeadMountedRig and appropriate pinch detectors are successfully palced in the scene. Once setup, the user should be able to grab and manipulate their simulation data in VR. It should be noted that the Detection Examples 1.0.4 package has been deprecated by the company at the time of this publication. Leap Motion offers a new Interaction library to replace it. This is an excellent example of how quickly these technologies are developing and evolving, providing a rich and ever expanding plethora of software and hardware tools for use with data visualizaiton. The LeapRTS.cs script is provided with the demo files.
 
 ### Demo 3a and 3b
 Here's how you start simulating and visualizing things in the engine. For more detail on that, refer to our publication.
