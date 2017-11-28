@@ -27,8 +27,6 @@
      <img src="./images/unrealEnvironment.png"/>
 </div><br>
 
-
-
 ## How to use LammpsVR Editor
 1. Real-time Simulation Mode
   1. Make a new level
