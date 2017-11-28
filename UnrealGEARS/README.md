@@ -15,7 +15,7 @@
   * [HTC Vive](https://www.vive.com/us/setup/)
 3. Generate Visual Studio files by right clicking the Unreal project file (LammpsVR.uproject) in the LammpsEditor directory.
 
-<div align="center" style="width : 80%; margin : auto">
+<div align="center" style="width : 70%; margin : auto">
      <img src="./images/generateProjectFiles.png"/>
 </div><br>
 
@@ -23,7 +23,7 @@
 
 ## Editor Overview ([Unreal Level Editor](https://docs.unrealengine.com/latest/INT/Engine/UI/LevelEditor/index.html))
 
-<div align="center" style="width : 80%; margin : auto">
+<div align="center" style="width : 70%; margin : auto">
      <img src="./images/unrealEnvironment.png"/>
 </div><br>
 
