@@ -21,11 +21,27 @@
 
   *If your computer does not associate .uproject files with the Unreal Editor, then you may have to open up the .uproject file via the Epic Games Launcher first.*
 
-## Environment Overview
+## Editor Overview ([Unreal Level Editor](https://docs.unrealengine.com/latest/INT/Engine/UI/LevelEditor/index.html))
 
 <div align="center" style="width : 80%; margin : auto">
      <img src="./images/unrealEnvironment.png"/>
 </div><br>
+
+1. [Viewport](https://docs.unrealengine.com/latest/INT/Engine/UI/LevelEditor/Viewports/index.html)
+
+  This is your means of previewing the virtual environment in which your LAMMPS simulation will run. When selected, a level will appear in this window. You can then place objects in the environment or fly around with the mouse and arrow keys. Objects in the currently selected level appear in the World Outliner window (3).
+
+2. [Content Browser](https://docs.unrealengine.com/latest/INT/Engine/Content/index.html)
+
+  This is the file explorer for C++ files, Unreal Blueprints, Materials, etc. associated with your project and/or simulation. Make sure any LAMMPS related resources (e.g. input scripts, data/dump files) are here in the Content/LammpsResource/ folder.
+
+3. [World Outliner](https://docs.unrealengine.com/latest/INT/Engine/UI/LevelEditor/SceneOutliner/index.html)
+
+  This is the list of objects/Blueprints in the currently selected level (this level is previewed in the Viewport).
+
+4. [Details](https://docs.unrealengine.com/latest/INT/Engine/UI/LevelEditor/Details/index.html)
+
+  This window describes the details of a selected item in the World Outliner window (3). When a LammpsController Blueprint in the current level is selected, this is where you can edit the input LAMMPS script, LAMMPS animation specifics (e.g. initial time step, animation step size), and the target LAMMPS dll that runs each simulation step.
 
 ## How to use LammpsVR Editor
 1. Real-time Simulation Mode
