@@ -5,7 +5,8 @@
 </div>
 
 ## Overview
-With this instance of GEARS, we provide a platform to run real time and precomputed LAMMPS simulations in virtual reality. With minimal to no coding, a user can provide their own LAMMPS input script, select the sizes and colors of the particles using our GUI tool, then simply press play to watch it execute in VR.
+
+With this instance of GEARS, we move past adapting existing code to run real time simulations by integrating a the popular molecular dynamics library, [LAMMPS](http://lammps.sandia.gov/), developed by [Sandia National Laboratories](http://www.sandia.gov/). Using our platform, one can run both real time and precomputed LAMMPS simulations in virtual reality. With minimal to no coding, a user can provide their own LAMMPS input script, select the sizes and colors of the particles using our GUI tool, then simply press play to watch it execute in VR.
 
 ## System Requirements
 * [Windows 10 OS](https://www.microsoft.com/en-us/windows/) (64-bit Version Recommended)
