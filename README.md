@@ -33,7 +33,7 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
 
 3. Real-time Simulator in Virtual Reality
 
-   This demo consists of two parts, both hilighting the engines' capabilities of not only viewing precomputed data, but actually running simulations in real time. By translating existing code into the native language of Unity, C#, we provide the user real-time examples of a kinetic Monte Carlo and molecular dynamics based simulations. 
+   This demo consists of two parts, both hilighting the engines' capabilities of not only viewing precomputed data, but actually running simulations in real time. By translating existing code into the native language of Unity, C#, we provide the user real-time examples of a kinetic Monte Carlo and molecular dynamics based simulations.
 
 <div align="center">
      Insert image of KMC or Lennard Jones
@@ -66,7 +66,7 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
    Although we've demo'd the ability to speed up, slow down, and pause a real time simulations in Unity and Unreal GEARS, further interactive support would also e incredibly beneficial to the utility of GEARS. Allowing a user to pause the simulation, take hold of one or more particles, and move or insert them elsewhere would make GEARS an even more powerful experimental visualization tool.
 4. *Visible Bonds in Unreal GEARS with LAMMPS*
    There is no mechanism for calculating and visualizing where bonds occur between particles in the Unreal LAMMPS simulations.
-	    
+
 ## Known Issues
 * Making illegal/invalid LAMMPS calls in the LAMMPS input script will cause the engine to freeze
 * OpenMP support in the LAMMPS input script only works when utilizing all the cores available on the machine. Only utilizing a fraction of the cores has been shown to cause the engine to crash.
@@ -75,5 +75,14 @@ Here we provide two flavors of GEARS, one utilizing the Unity game engine and an
 ## License
 
 This project is licensed under the GPU 3.0 license - see the [LICENSE.md](LICENSE.md) file for details
+
+## Authors
+* Brandon Keiji Horton (University of Southern California, now at Microsoft)
+* Erick Moen (University of Southern California)
+* Anders Hafreager (University of Oslo)
+* Michael Qian (University of Southern California, now at Amazon)
+* Tao Wei (Lamar University)
+* Ken-ichi Nomura (University of Southern California)
+* Aiichiro Nakano (University of Southern California)
 
 ## How to cite
