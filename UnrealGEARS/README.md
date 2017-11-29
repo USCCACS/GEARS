@@ -1,4 +1,11 @@
-# GEARS in Unreal Engine 4.16
+# GEARS in Unreal Engine 4.16 (with LAMMPS)
+
+<div align="center">
+     <img src="./images/PlaybackSim1.png" width=90%/>
+</div>
+
+## Overview
+With this instance of GEARS, we provide a platform to run real time and precomputed LAMMPS simulations in virtual reality. With minimal to no coding, a user can provide their own LAMMPS input script, select the sizes and colors of the particles using our GUI tool, then simply press play to watch it execute in VR.
 
 ## System Requirements
 * [Windows 10 OS](https://www.microsoft.com/en-us/windows/) (64-bit Version Recommended)
@@ -92,4 +99,9 @@ For this demo, we display the real time simulation capabilities of GEARS. In the
 * The third example simulates chemical vapor deposition, using both an initial configuration, pair style, and reaxff force field package compiled into our LAMMPS Dll.
 
 ### Demo 2: Animation
-Fracture = rerunning precomputed dump files
+For this demo, we show the capabilities of GEARS to rerun previously computed simulations, effectively acting as an simulation animator in virtual reality. Our demo runs several thousand time steps of a 100,000 particle simulation precomputed on the University of Southern California's high performance computing cluster.
+
+Navigate to the FractureWorld level in the Contents windows, double click it, then press play. One can pause and unpause the animation by pressing the face buttons on their Oculus Touch or Vive Motion Controller.
+
+### Code Architecture
+To be added shortly.
