@@ -52,32 +52,45 @@ In Unreal GEARS, we showed how one can adapt existing code to run real time simu
   This window describes the details of a selected item in the World Outliner window (3). When a LammpsController Blueprint in the current level is selected, this is where you can edit the input LAMMPS script, LAMMPS animation specifics (e.g. initial time step, animation step size), and the target LAMMPS dll that runs each simulation step.
 
 ## How to use LammpsVR Editor
-1. Real-time Simulation Mode
-  1. Make a new level
-  2. From Blueprints/Simulation, drag the BP_LammpsController blueprint class into the level editor preview window (setting to the origin works fine).
-  3. Setup the BP_LammpsController (via the Details window in the Unreal Editor):
-	* LAMMPS Dll and Input Script
-	  1. Specify the dll you wish to use under the "Dll Name" parameter in the "Lammps" Category. The dll must be located in the LammpsEditor/Content/LammpsResource/LammpsDll/ directory.
-	  2. Specify the LAMMPS input script for the simulation in the "Input Script" parameter under the "Lammps" category. This script must be located in the LammpsEditor/Content/LammpsResource/Scripts/ directory.
-	  3. Choose either Simulation Mode or Animation Mode
-		1. Simulation Mode
-		  Make sure that the "Animation Mode" box is unchecked.
-		2. Animation Mode
-		  Check the box label "Animation Mode". You will then need to specify which time steps to visualize based on LAMMPS dump files. LAMMPS dump files must be located in the Content/LammpsResource/LammpsDump/ directory. Dump filename must start with a prefix that you specify, followed by a "." and the time step number. Each dump file should only contain the state of a single time step. Example: "fracture.1234567.dump". Prefix, starting time step, final time step, and animation time step intervals can be specified under the "Animation" category in the BP_LammpsController Details window.
-	* Particle Colors and Radii
-	  By default, a particle visualization manager will assign a fixed particle radius and random color to all particle types in the LAMMPS instance. However, if you would like to customize the radii and color of your particles, you can edit them under the "Particle Management" category in the Details windows of the Unreal Editor. To customize:
-	  1. Select the "+" sign next to the "Particles" parameter under the "Particle Management" category to add a new particle type to provide a custom color and radius for a new particle
-	  2. Specify the particle's LAMMPS type number, radius (in atomic units), and color.
+1. Make sure VR equipment (e.g. Headset, Controllers) is plugged into device and running.
+2. Start LammpsVR.uproject using Unreal Editor 4.16
+3. In the **Content Browser**, go to Levels/Demo1-RealtimeSim/ for real time simulation demos. Or, go to Levels/Demo2-Animation/ for rerun animations of precomputed simulations.
+4. Select desired level by double clicking the icon.
+5. Press the "Play - VR Preview" option in the top window.
+6. Put on headset.
+7. Enjoy :)
 
-3. Default User Controller Setup:
-  1. Drag a player spawning point into the editor preview window. The blueprint for this can be found in the Modes window of the Unreal Editor.
-  2. In the World Settings windows of the Unreal Editor, set the "GameMode Override" paramter to BP_VRGameMode. Then under "Selected GameMode", set the "Default Pawn Class" to "BP_VRPawn"
-  3. If you would like to create your own player controller, then this step is not necessary.
+### Controls:
+  Using motion controller, point green laser in direction that you want to move. Press either the right or left trigger buttons on the motion controllers to move forward in the direction that the green laser is pointing to.
 
-4. LAMMPS Input Script Rules:
+  To pause the simulation (whether real time or animation), press one of the face buttons on the motion controller (for HTC Vive motion controllers, this is restricted to the circular directional pad on the front).
+
+  To exit your current level, press the ESC key on the keyboard.
+
+### How to customize LammpsVR levels
+
+  Perhaps you would like to put your own simulation in the LammpsVR editor, and watch it for yourself. To do that,
+
+  1. Prepare a LAMMPS script for your simulation and add ```run 0``` to the end of it.
+  2. Place it in the LammpsResource/Scripts/ directory. If the LAMMPS script references other data files, be sure to include them at their proper relative locations.
+<br/>
+<sub>
+      *Some LAMMPS commands may not work depending on what they do. For example, if the LAMMPS command requires a specific amount of CPUs, or references an MPI related command for example, they could cause the simulation to stall. Refer to the LAMMPS script we have provided for all tested LAMMPS commands.*
+<sub/>
+  3. Select a demo level as before, then select the BP_LammpsController in the **World Outlier** window. Go to its details in the **Details** window (pictured below).
+
+  <div align="center">
+       <img src="./images/customizationUi.png" width=40%/>
+  </div><br>
+
+  4. Fill out the *Lammps*, *Animation*, and *Particle Management* sections in the window with references to your custom LAMMPS scripts withing the LammpsResource/ directory. This includes file paths, particle number to size and color associations, and even a choice to turn on animation mode. If animation mode is selected, be sure to include details about the animations time step files in the *Animation* section. All time step files must be in the LAMMPS DUMMP format. Additionally, the input script needs to be set up in a particular way. We will post a guide to this soon, so for now refer to our LAMMPS script, *LammpsResource/Scripts/Fracture/rerunscript.in*, as an example.
+
+  5. Press Play.
+
+### Extra LAMMPS Input Script Rules reiterated:
   * The current working directory gets set to the LammpsVR/Content/LammpsResource/. Therefore, if a LAMMPS input script references another file, the path to that file must start from the LammpsResource directory.
   * LAMMPS commands that are not compatible with the compiled DLL will cause the LAMMPS instance to freeze or crash. For example, MPI is not included in our provided DLL. Therefore, if a LAMMPS input script makes use of the "processor" command, the engine will crash. The engine also freezes in instances where the LAMMPS input script references a file that does not exits. Therefore, always double check your path names.
-  * For animation mode, the LAMMPSinput script must setup the LAMMPS system before running. Because the animation mode does not actually use any of the force calculations, dummy values for the system intial paramters can be used. For example, one can setup the animation system in their LAMMPS input script via the following LAMMPS commands:
+  * For animation mode, the LAMMPS input script must setup the LAMMPS system before running. Because the animation mode does not actually use any of the force calculations, dummy values for the system initial parameters can be used. For example, one can setup the animation system in their LAMMPS input script via the following LAMMPS commands:
   ```
   boundary  p p p
   atom_style atomic
