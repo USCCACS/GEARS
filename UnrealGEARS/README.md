@@ -73,10 +73,9 @@ In Unreal GEARS, we showed how one can adapt existing code to run real time simu
 
   1. Prepare a LAMMPS script for your simulation and add ```run 0``` to the end of it.
   2. Place it in the LammpsResource/Scripts/ directory. If the LAMMPS script references other data files, be sure to include them at their proper relative locations.
-<br/>
-<sub>
+  
       *Some LAMMPS commands may not work depending on what they do. For example, if the LAMMPS command requires a specific amount of CPUs, or references an MPI related command for example, they could cause the simulation to stall. Refer to the LAMMPS script we have provided for all tested LAMMPS commands.*
-<sub/>
+
   3. Select a demo level as before, then select the BP_LammpsController in the **World Outlier** window. Go to its details in the **Details** window (pictured below).
 
   <div align="center">
