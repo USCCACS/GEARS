@@ -58,7 +58,7 @@ python.exe setup.py --interactive --vcm
 </ol>
 
 ## Demo Descriptions
-### [Demo 1 - Interactive Data Viewer for Post-Processing](https://github.com/USCCACS/GEARS/tree/master/UnityGEARS/Editor/Assets/Demo1-DataViewer)
+### Demo 1 - [Interactive Data Viewer for Post-Processing](https://github.com/USCCACS/GEARS/tree/master/UnityGEARS/Editor/Assets/Demo1-DataViewer)
   Here we display a quick method for viewing precomputed simulation data. This method highlights a minimal number steps to viewing your data in VR via game engines. The data in this scene was computed via simulation on a high performace computing cluster (HPCC), then immediately converted into a 3D mesh that we could import into our scene.
 
   Leap Motion controls are also implemented for interaction. Using the Leap, once can grab, reorient, and scale their simulation data with their own hands (no extra controller necessary). This allows for the user to intuitively modify how they view their data, facilitating accelerated data acquisition. The directions for Leap Motion use are as follows:
