@@ -89,3 +89,4 @@ This project is licensed under the GPU 3.0 license - see the [LICENSE.md](LICENS
 "Game-Engine-Assisted Research platform for Scientific computing (GEARS) in virtual reality", 
 B. K. Horton, R. K. Kalia, E. Moen, A. Nakano, K. Nomura, M. Qian, P. Vashishta, and A. Hafreager
 *SoftwareX* 9, 112-116  (2019)
+https://www.sciencedirect.com/science/article/pii/S2352711018300633
