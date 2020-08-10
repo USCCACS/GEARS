@@ -1,0 +1,25 @@
+{
+	"name": "Default bindings for Gamepads",
+	"controller_type": "gamepad",
+	"last_edited_by": "UnrealEngine",
+	"bindings":
+	{
+		"/actions/main":
+		{
+			"sources": [
+				{
+					"mode": "trigger",
+					"path": "/user/hand/left/input/trigger",
+					"inputs":
+					{
+						"click":
+						{
+							"output": "/actions/main/in/ViveTrigger_L"
+						}
+					}
+				}
+			]
+		}
+	},
+	"description": ""
+}
