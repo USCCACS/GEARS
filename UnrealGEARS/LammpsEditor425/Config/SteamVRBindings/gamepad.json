@@ -6,20 +6,8 @@
 	{
 		"/actions/main":
 		{
-			"sources": [
-				{
-					"mode": "trigger",
-					"path": "/user/hand/left/input/trigger",
-					"inputs":
-					{
-						"click":
-						{
-							"output": "/actions/main/in/ViveTrigger_L"
-						}
-					}
-				}
-			]
+			"sources": []
 		}
 	},
-	"description": ""
+	"description": "LammpsVR-13942748"
 }

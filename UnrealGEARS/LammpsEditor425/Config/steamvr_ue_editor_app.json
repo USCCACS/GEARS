@@ -5,7 +5,7 @@
 			"app_key": "application.generated.ue.lammpsvr-13942748.ue4editor.exe",
 			"launch_type": "url",
 			"url": "steam://launch/",
-			"action_manifest_path": "C:/Users/VR-computer/Documents/GitHub/TEMP/GEARS/UnrealGEARS/LammpsEditor425/Config/SteamVRBindings/steamvr_manifest.json",
+			"action_manifest_path": "C:/Users/VR-computer/Documents/GitHub/GEARS/UnrealGEARS/LammpsEditor425/Config/SteamVRBindings/steamvr_manifest.json",
 			"strings":
 			{
 				"en_us":
