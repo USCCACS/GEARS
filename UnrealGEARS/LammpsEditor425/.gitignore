@@ -19,6 +19,9 @@
 *.dylib
 *.dll
 
+# Save the Lammps dll files
+!Content/LammpsResource/LammpsDll/*.dll
+
 # Fortran module files
 *.mod
 
