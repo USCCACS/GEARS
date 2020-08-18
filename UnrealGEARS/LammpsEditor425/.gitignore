@@ -79,3 +79,7 @@ DerivedDataCache/*
 
 # Lammps Dump Files
 *.dump
+
+# Unneeded config files
+Config/SteamVRBindings
+Config/steamvr_ue_editor_app.json
