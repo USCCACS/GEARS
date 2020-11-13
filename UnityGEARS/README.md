@@ -1,53 +1,53 @@
 # GEARS in Unity 5
+____
 
 <div align="center">
      <img src="./images/InteractiveViewer.png"/>
 </div>
 
-## Overview
+# Overview
 
-In this instance of GEARS, we provide a platform/workflow to take your data into virtual reality with minimal effort or coding. We show how you can view and interact static snapshots of previously computed simulations as well as adapt existing simulation code to run in the engine in real time. Using free software, commodity hardware, and a few drags & drops, you can hold, manipulate, and examine your atomic structures with your very own hands!
+In these GEARS Demos, we show how you can take your data into virtual reality with minimal effort or coding. View and interact with static snapshots of previously computed simulations as well as adapt existing simulation code to run in the engine in real time. Using free software, commodity hardware, and a few drags & drops, you can hold, manipulate, and examine your atomic structures with your very own hands!
 
-## System Requirements
-* [Windows 10 OS](https://www.microsoft.com/en-us/windows/) (64-bit Version Recommended)
-* [Unity Engine](https://unity3d.com/) (Version 5.6.1f1 Recommended)
+# System Requirements
+* [Windows 10](https://www.microsoft.com/en-us/windows/) x64
+* [Unity Engine](https://unity3d.com/) v5.6.1f1
   * *Note: Be sure to also have Unity account created and logged in to the engine*
-* Virtual Reality Head Mounted Display (only need one)
+* Virtual Reality Head Mounted Display (HMD) of choice. We've only tested with
   1. [HTC Vive](https://www.vive.com/)
-  2. [Oculus Rift](https://www.oculus.com/)
+  1. [Oculus Rift](https://www.oculus.com/)
   * *Note: Respective runtimes and supporting software for the HMDs are also required*
 * For Interactive Demos: [Leap Motion](https://www.leapmotion.com/) attached to front of HMD
 
-## Installation
-The default installation only includes two of the four demos available. The two non-default demos are the Interactive Viewer and the Virtual Confocal Microscopy. Although these demos provide considerable insight on the strengths of Unity GEARS in VR, they utilize large object files to represent our data meshes. Therefore their installation steps may take extra time depending on the speed of your computer. If one chooses not to include them in their installation, then the large object files will simply be left in their respective .zip files, and the corresponding scenes will be empty.
+# Installation
 
-### Setup via Python
-Make sure Python 2 is installed on your Windows 10 machine. From the Windows command prompt run:
+## Requirements
+* Python 2.7, >= 3.6
+* [Pip](https://pip.pypa.io/en/stable/)
+
 ```
-python.exe setup.py
+$ pip install requests
+$ python setup.py
 ```
-If you wish to install the interactive and virtual confocal microscopy demos, include the appropriate flags with the above command like so:
+
+> Note: Demo 2 (virtual confocal microscopy) is rather large. To skip setup for Demo 2, add the flag `--noVCM`
+
+Then run with:
 ```
-python.exe setup.py --interactive --vcm
+$ </path/to/Unity.exe> -projectPath ./Editor
 ```
-* *Note: This script assumes that your version of Unity is stored at "C:\Program Files\Unity\Editor\Unity.exe"*
 
-### Manual Setup
-* If you wish to install the interactive and virtual confocal microscopy demos, unzip the following folders:
-  ```
-  GEARS\UnityGEARS\Editor\Assets\Demo1-DataViewer\GeometryData.zip
-  GEARS\UnityGEARS\Editor\Assets\Demo2-VirtualConfocalMicroscopy\GeometryData.zip
-  ```
+or launch Unity manually and open the `GEARS\UnityGEARS\Editor\` folder.
 
-* Unzip the following file regardless of whether you choose to install the interactive and confocal microscopy demos:
-  ```
-  GEARS\UnityGEARS\Editor\Assets\Leap_Motion_CoreAssets_4.2.1.zip
-  ```
+## Manual Setup (no Python)
 
-* Open up Unity.exe and fill out any necessary login credentials.
-* Select "Open" to open a new project, and navigate to the GEARS\UnrealGEARS\Editor\ folder and select it. Unity will the generate all the necessary project files.
+Unzip [`.\Editor\Assets\Leap_Motion_CoreAssets_4.2.1.zip`](./Editor/Assets/Leap_Motion_CoreAssets_4.2.1.zip)
 
-## How to use
+For Demo #1, unzip [`.\Editor\Assets\Demo1-DataViewer\GeometryData.zip`](./Editor/Assets/Demo1-DataViewer/GeometryData.zip)
+
+For Demo #2, download then unzip this [file](https://drive.google.com/file/d/1E0kapjSMS-4Wl6bqg2ERAD6R8xWKcxtx/view?usp=sharing) to [`.\Editor\Assets\Demo2-VirtualConfocalMicroscopy\GeometryData.zip`](./Editor/Assets/Demo2-VirtualConfocalMicroscopy)
+
+# How to use
  Press the play button on the top of the editor window. Switch between demos using the number pad (0-4). Number pad and demo scene correspondences are as follows:
 <ol start="0">
  <li> Empty Environment </li>
