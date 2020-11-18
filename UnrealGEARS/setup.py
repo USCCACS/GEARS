@@ -35,7 +35,7 @@ def download_file_from_google_drive(id, destination):
 
 projectRoot = os.path.dirname(os.path.realpath(__file__))
 lammpsDumpDir = os.path.join(projectRoot, 'LammpsEditor', 'Content', 'LammpsResource', 'LammpsDump')
-if not os.path.exists(lammpsDumpDir)
+if not os.path.exists(lammpsDumpDir):
   os.makedirs(lammpsDumpDir)
 
 lammpsDumpFiles = os.listdir(lammpsDumpDir)
