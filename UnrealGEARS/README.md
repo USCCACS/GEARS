@@ -4,11 +4,11 @@
      <img src="./images/PlaybackSim1.png" width=90%/>
 </div>
 
-## Overview
+# Overview
 
 In Unreal GEARS, we showed how one can adapt existing code to run real time simulations in virtual reality. With this instance of GEARS, we move past that tedious and error-prone process, and instead integrate the popular molecular dynamics library, [LAMMPS](http://lammps.sandia.gov/), developed by [Sandia National Laboratories](http://www.sandia.gov/). Using our platform, one can run both real time and precomputed LAMMPS simulations in virtual reality. With minimal to no coding, a user can provide their own LAMMPS input script, select the sizes and colors of the particles using our GUI tool, then simply press play to watch it execute in VR.
 
-## System Requirements
+# System Requirements
 * [Windows 10 OS](https://www.microsoft.com/en-us/windows/) (64-bit Version Recommended)
 * [Unreal Engine 4.16](https://www.unrealengine.com/en-US/what-is-unreal-engine-4)
 * Virtual Reality Head Mounted Display (only need one)
@@ -16,7 +16,17 @@ In Unreal GEARS, we showed how one can adapt existing code to run real time simu
   2. [Oculus Rift](https://www.oculus.com/) with Oculus Touch
   * *Note: Respective runtimes and supporting software for the HMDs are also required*
 
-## Installation
+# Installation
+
+## Requirements
+* Python 2.7, >= 3.6
+* [Pip](https://pip.pypa.io/en/stable/)
+
+```
+$ pip install requests
+$ python setup.py
+```
+
 1. Install the Epic Games Launcher and Unreal Engine 4 from the [Epic Games](https://www.unrealengine.com/what-is-unreal-engine-4) website. The current project was developed in version 4.16.
 2. For VR mode, install the appropriate runtime for your HMD of choice:
   * [Oculus Rift](https://www3.oculus.com/en-us/setup/)
@@ -29,7 +39,7 @@ In Unreal GEARS, we showed how one can adapt existing code to run real time simu
 
   *If your computer does not associate .uproject files with the Unreal Editor, then you may have to open up the .uproject file via the Epic Games Launcher first.*
 
-## Editor Overview ([Unreal Level Editor](https://docs.unrealengine.com/latest/INT/Engine/UI/LevelEditor/index.html))
+# Editor Overview ([Unreal Level Editor](https://docs.unrealengine.com/latest/INT/Engine/UI/LevelEditor/index.html))
 
 <div align="center">
      <img src="./images/unrealEnvironment.png" width=70%/>
