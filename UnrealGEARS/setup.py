@@ -40,13 +40,14 @@ if not os.path.exists(lammpsDumpDir):
 
 lammpsDumpFiles = os.listdir(lammpsDumpDir)
 lammpsDumpFilename = 'LammpsDumpFiles.zip'
-lammpsDumpFileId = '1xZjoNFEQ-1oVfaBIQ-zNmSEHEIEqOlk6' # hard coded file id
+googleDriveFileId = '1xZjoNFEQ-1oVfaBIQ-zNmSEHEIEqOlk6' # hard coded file id
+lammpsDumpZipFullpath = os.path.join(lammpsDumpDir, lammpsDumpFilename)
 
 if len(lammpsDumpFiles) == 0:
     print('Downloading LAMMPS dump files for Animation Demo')
-    download_file_from_google_drive(lammpsDumpFileId, lammpsDumpDir)
+    download_file_from_google_drive(googleDriveFileId, lammpsDumpZipFullpath)
     print('Download finished. Extracting files')
-    zip = zipfile.ZipFile(os.path.join(lammpsDumpDir, lammpsDumpFilename), 'r')
+    zip = zipfile.ZipFile(lammpsDumpZipFullpath, 'r')
     zip.extractall(lammpsDumpDir)
     zip.close()
     print('Setup complete')
