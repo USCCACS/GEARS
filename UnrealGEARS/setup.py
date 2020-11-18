@@ -52,4 +52,4 @@ if len(lammpsDumpFiles) == 0:
     zip.close()
     print('Setup complete')
 else:
-    print('Demo 2 Geometry Data already exists. If prefab errors occur, remove folder and meta files, then retry.') 
+    print('LammpsDump files already exist. Consider removing that folder and running setup again') 
